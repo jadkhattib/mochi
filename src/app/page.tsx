@@ -9,6 +9,7 @@ import { CircularFlag } from "@/components/CircularFlag";
 import { getCountryCode } from "@/lib/countryFlags";
 import { formatCurrency, formatNumber, formatPercentage, formatROI } from "@/lib/formatters";
 import { Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell, PieChart, Pie, ComposedChart, Area } from "recharts";
+import { ResponsiveTreeMap } from '@nivo/treemap';
 
 export default function Overview() {
   const [data, setData] = useState<ApiDataResponse | null>(null);
@@ -243,43 +244,51 @@ export default function Overview() {
       </div>
 
       {/* Channel Mix Overview & Brand Performance */}
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-        <div className="rounded-xl bg-white border border-black/10 p-4">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 h-[600px]">
+        <div className="rounded-xl bg-white border border-black/10 p-4 flex flex-col h-full">
           <h3 className="font-medium mb-4">Channel Mix Overview</h3>
-          <ResponsiveContainer width="100%" height={300}>
-            <PieChart>
-              <Pie
-                data={channelContribution}
-                cx="50%"
-                cy="50%"
-                outerRadius={120}
-                fill="#8884d8"
-                dataKey="spend"
-                label={({ channel, spend }) => `${channel}: ${formatCurrency(spend, 1)}`}
-              >
-                {channelContribution.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
-                ))}
-              </Pie>
-              <Tooltip 
-                contentStyle={{ 
-                  backgroundColor: 'white', 
-                  border: '1px solid #e0e0e0', 
-                  borderRadius: '8px',
-                  fontSize: '12px'
-                }}
-                formatter={(value, name) => [
-                  typeof value === 'number' ? '$' + value.toLocaleString() : value, 
-                  'Spend'
-                ]}
-              />
-            </PieChart>
-          </ResponsiveContainer>
+          <div className="flex-1 min-h-0">
+            <ResponsiveTreeMap
+              data={{
+                name: 'Channel Mix',
+                children: channelContribution.map((channel, index) => ({
+                  name: channel.channel,
+                  value: channel.spend,
+                  color: colors[index % colors.length]
+                }))
+              }}
+              identity="name"
+              value="value"
+              valueFormat=".2s"
+              innerPadding={2}
+              outerPadding={2}
+              margin={{ top: 10, right: 10, bottom: 10, left: 10 }}
+              labelSkipSize={12}
+              labelTextColor="#ffffff"
+              colors={(node) => node.data.color || '#8884d8'}
+              borderColor={{ from: 'color', modifiers: [['darker', 0.6]] }}
+              borderWidth={2}
+              animate={true}
+              motionStiffness={90}
+              motionDamping={11}
+              tooltip={({ node }) => (
+                <div className="bg-white border border-gray-200 rounded-lg p-3 shadow-lg">
+                  <div className="font-medium text-gray-900">{node.data.name}</div>
+                  <div className="text-sm text-gray-600">
+                    Spend: {formatCurrency(node.value)}
+                  </div>
+                  <div className="text-sm text-gray-600">
+                    {((node.value / channelContribution.reduce((sum, c) => sum + c.spend, 0)) * 100).toFixed(1)}%
+                  </div>
+                </div>
+              )}
+            />
+          </div>
         </div>
 
-        <div className="rounded-xl bg-white border border-black/10 p-4">
+        <div className="rounded-xl bg-white border border-black/10 p-4 flex flex-col h-full">
           <h3 className="font-medium mb-4">Brand Performance Comparison</h3>
-          <div className="space-y-4">
+          <div className="space-y-4 flex-1 overflow-y-auto">
             {brandPerformance.slice(0, 6).map((brand, idx) => {
               const maxROI = Math.max(...brandPerformance.slice(0, 6).map(b => b.roi));
               const roiPercentage = (brand.roi / maxROI) * 100;
