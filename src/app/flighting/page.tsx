@@ -49,7 +49,7 @@ export default function FlightingPage() {
   // Calculate insights
   const bestScenario = flightingScenarios.length > 0 ? flightingScenarios[0] : null;
   const bestBudgetScenario = budgetScenarios.length > 0 ? budgetScenarios[0] : null;
-  const optimalSpendLevel = saturationCurves.find(s => !s.diminishingReturns && s.saturationPoint > 80)?.spendLevel || 2.0;
+  const optimalSpendLevel = saturationCurves.find(s => s.saturation > 80)?.spend || 2.0;
   const avgEfficiency = flightingScenarios.reduce((sum, s) => sum + (s.efficiency === "Very High" ? 5 : s.efficiency === "High" ? 4 : s.efficiency === "Medium" ? 3 : 2), 0) / flightingScenarios.length;
 
   // Filter data based on selected scenario
@@ -120,7 +120,7 @@ export default function FlightingPage() {
         </div>
         <div className="rounded-xl bg-white border border-black/10 p-4">
           <h3 className="font-medium text-sm mb-2">Spend Level</h3>
-          <p className="text-2xl font-bold text-[#2d2d2d]">{optimalSpendLevel}x</p>
+          <p className="text-2xl font-bold text-[#2d2d2d]">{(optimalSpendLevel / 1000).toFixed(1)}K</p>
           <p className="text-xs text-black/60 mt-1">Before saturation</p>
         </div>
         <div className="rounded-xl bg-white border border-black/10 p-4">
@@ -236,155 +236,6 @@ export default function FlightingPage() {
         </div>
       </div>
 
-      {/* Saturation Curve Analysis & Competitive Analysis */}
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-        <div className="rounded-xl bg-white border border-black/10 p-4">
-          <h3 className="font-medium mb-4">Saturation Curve Analysis</h3>
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={saturationCurves}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-              <XAxis dataKey="spendLevel" tick={{ fontSize: 12 }} />
-              <YAxis tick={{ fontSize: 12 }} />
-              <Tooltip 
-                contentStyle={{ 
-                  backgroundColor: 'white', 
-                  border: '1px solid #e0e0e0', 
-                  borderRadius: '8px',
-                  fontSize: '12px'
-                }}
-                formatter={(value, name) => [
-                  typeof value === 'number' ? value.toFixed(2) : value, 
-                  name === 'continuousROI' ? 'Continuous ROI' : name === 'alternatingROI' ? 'Alternating ROI' : name === 'burstROI' ? 'Burst ROI' : name
-                ]}
-              />
-              <Legend />
-              <Line type="monotone" dataKey="continuousROI" stroke="#2d2d2d" strokeWidth={2} name="Continuous" />
-              <Line type="monotone" dataKey="alternatingROI" stroke="#8884d8" strokeWidth={2} name="Alternating" />
-              <Line type="monotone" dataKey="burstROI" stroke="#82ca9d" strokeWidth={2} name="Burst" />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-
-        <div className="rounded-xl bg-white border border-black/10 p-4">
-          <h3 className="font-medium mb-4">Competitive Flight Analysis</h3>
-          <ResponsiveContainer width="100%" height={300}>
-            <ComposedChart data={competitiveAnalysis}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-              <XAxis dataKey="period" tick={{ fontSize: 12 }} />
-              <YAxis yAxisId="left" tick={{ fontSize: 12 }} />
-              <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 12 }} />
-              <Tooltip 
-                contentStyle={{ 
-                  backgroundColor: 'white', 
-                  border: '1px solid #e0e0e0', 
-                  borderRadius: '8px',
-                  fontSize: '12px'
-                }}
-                formatter={(value, name) => [
-                  typeof value === 'number' ? (typeof name === 'string' && name.includes('Share') ? value.toFixed(1) + '%' : value.toLocaleString()) : value, 
-                  name === 'marketShare' ? 'Market Share' : name === 'shareOfVoice' ? 'Share of Voice' : name === 'efficiency' ? 'Efficiency' : name
-                ]}
-              />
-              <Legend />
-              <Bar yAxisId="left" dataKey="marketShare" fill="#82ca9d" name="Market Share %" />
-              <Bar yAxisId="left" dataKey="shareOfVoice" fill="#8884d8" name="Share of Voice %" />
-              <Line yAxisId="right" type="monotone" dataKey="efficiency" stroke="#ff7300" strokeWidth={2} name="Efficiency" />
-            </ComposedChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
-
-      {/* Flighting Scenario Details Table */}
-      <div className="rounded-xl bg-white border border-black/10 p-4">
-        <h3 className="font-medium mb-4">Flighting Scenario Performance Details</h3>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-black/10">
-                <th className="text-left py-2 px-3 font-medium">Scenario</th>
-                <th className="text-left py-2 px-3 font-medium">Pattern</th>
-                <th className="text-right py-2 px-3 font-medium">ROI</th>
-                <th className="text-right py-2 px-3 font-medium">Total Spend</th>
-                <th className="text-right py-2 px-3 font-medium">Weeks Active</th>
-                <th className="text-right py-2 px-3 font-medium">Avg Weekly</th>
-                <th className="text-center py-2 px-3 font-medium">Efficiency</th>
-                <th className="text-left py-2 px-3 font-medium">Recommendation</th>
-              </tr>
-            </thead>
-            <tbody>
-              {flightingScenarios.map((row, idx) => (
-                <tr key={idx} className="border-b border-black/5 hover:bg-black/5">
-                  <td className="py-2 px-3">
-                    <span className="px-2 py-1 rounded text-xs font-medium" style={{ 
-                      backgroundColor: (flightColors[row.scenario as keyof typeof flightColors] || colors[idx % colors.length]) + '20', 
-                      color: flightColors[row.scenario as keyof typeof flightColors] || colors[idx % colors.length]
-                    }}>
-                      {row.scenario}
-                    </span>
-                  </td>
-                  <td className="py-2 px-3">
-                    <span className="px-2 py-1 rounded bg-gray-100 text-xs">{row.pattern}</span>
-                  </td>
-                  <td className="py-2 px-3 text-right font-bold">{row.roi.toFixed(2)}</td>
-                  <td className="py-2 px-3 text-right">${row.totalSpend.toLocaleString()}</td>
-                  <td className="py-2 px-3 text-right">{row.weeksActive}</td>
-                  <td className="py-2 px-3 text-right">${row.avgWeeklySpend.toLocaleString()}</td>
-                  <td className="py-2 px-3 text-center">
-                    <span className={`px-2 py-1 rounded-full text-xs ${
-                      row.efficiency === "Very High" ? "bg-green-100 text-green-800" :
-                      row.efficiency === "High" ? "bg-blue-100 text-blue-800" :
-                      row.efficiency === "Medium" ? "bg-yellow-100 text-yellow-800" :
-                      "bg-red-100 text-red-800"
-                    }`}>
-                      {row.efficiency}
-                    </span>
-                  </td>
-                  <td className="py-2 px-3 text-xs max-w-xs">{row.recommendation}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      {/* Flight Timing Recommendations */}
-      <div className="rounded-xl bg-white border border-black/10 p-4">
-        <h3 className="font-medium mb-4">Strategic Flight Timing Recommendations</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-          {timingRecommendations.map((timing, idx) => (
-            <div key={idx} className="border border-black/10 rounded-lg p-4">
-              <div className="flex items-center justify-between mb-3">
-                <h4 className="font-medium text-sm">{timing.timing}</h4>
-                <span className={`px-2 py-1 rounded-full text-xs ${
-                  timing.confidence === "High" ? "bg-green-100 text-green-800" :
-                  timing.confidence === "Medium" ? "bg-yellow-100 text-yellow-800" :
-                  "bg-red-100 text-red-800"
-                }`}>
-                  {timing.confidence}
-                </span>
-              </div>
-              <div className="space-y-2 text-xs">
-                <div>
-                  <span className="font-medium">Scenario:</span> {timing.scenario}
-                </div>
-                <div>
-                  <span className="font-medium">Expected Lift:</span> +{timing.expectedLift}%
-                </div>
-                <div>
-                  <span className="font-medium">Best Channels:</span> {timing.bestChannels}
-                </div>
-                <div>
-                  <span className="font-medium">Reasoning:</span> {timing.reasoning}
-                </div>
-                <div>
-                  <span className="font-medium">Implementation:</span> {timing.implementation}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
       {/* Strategic Flighting Recommendations */}
       <div className="rounded-xl bg-gradient-to-r from-[#f3f2ef] to-white border border-black/10 p-4">
         <h3 className="font-medium mb-3">Strategic Flighting Recommendations</h3>
@@ -401,7 +252,7 @@ export default function FlightingPage() {
             <h4 className="font-medium mb-2">Budget Optimization</h4>
             <ul className="space-y-1 text-black/70">
               <li>• Optimal budget: <strong>{bestBudgetScenario?.budgetLevel || "Current"}</strong></li>
-              <li>• Saturation point: {optimalSpendLevel}x current spend level</li>
+              <li>• Saturation point: {(optimalSpendLevel / 1000).toFixed(1)}K spend level</li>
               <li>• Focus on {optimizationGoal === "ROI" ? "efficiency" : "volume"} optimization</li>
             </ul>
           </div>

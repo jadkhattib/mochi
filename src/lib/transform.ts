@@ -168,8 +168,8 @@ export function toSaturationCurveAnalysis(records: DailyRecord[]) {
   }
   
   // Generate saturation curve points
-  return Array.from(channels.values()).map(ch => {
-    const points = [];
+  return Array.from(channels.entries()).map(([channelId, ch]) => {
+    const points: Array<{ channel: string; spend: number; nr: number; roi: number; saturation: number; marginalROI: number }> = [];
     const maxSpend = ch.spend * 2; // Extend to 200% of current spend
     const currentEfficiency = ch.nr / ch.spend;
     
@@ -180,7 +180,7 @@ export function toSaturationCurveAnalysis(records: DailyRecord[]) {
       const roi = spendLevel > 0 ? marginalNR / spendLevel : 0;
       
       points.push({
-        channel: ch.channel,
+        channel: channelId,
         spend: spendLevel,
         nr: marginalNR,
         roi,
@@ -205,8 +205,8 @@ export function toMediaEfficiencyFrontier(records: DailyRecord[]) {
     channelMetrics.set(r.channel, prev);
   }
   
-  return Array.from(channelMetrics.values()).map(ch => ({
-    channel: ch.channel,
+  return Array.from(channelMetrics.entries()).map(([channelId, ch]) => ({
+    channel: channelId,
     reach: ch.reach,
     frequency: ch.frequency,
     spend: ch.spend,

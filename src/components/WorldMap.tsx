@@ -86,7 +86,7 @@ export function WorldMap({ data, onCountryClick, selectedCountry }: WorldMapProp
         }}
         style={{ width: "100%", height: "100%" }}
       >
-        <Sphere stroke="#E4E5E6" strokeWidth={0.5} fill="transparent" />
+        <Sphere id="world-sphere" stroke="#E4E5E6" strokeWidth={0.5} fill="transparent" />
         <Graticule stroke="#E4E5E6" strokeWidth={0.3} />
         
         <Geographies geography={geoUrl}>
