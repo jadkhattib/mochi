@@ -129,7 +129,10 @@ export default function ChatBubble({ getContext }: ChatBubbleProps) {
         
         <button
           title="Ask Mochi AI"
-          className="relative bg-white/20 backdrop-blur-xl backdrop-saturate-150 text-black/80 w-16 h-16 rounded-full border border-white/30 shadow-2xl flex items-center justify-center hover:bg-white/30 hover:text-black/90 focus:outline-none transition-all hover:scale-105 duration-300"
+          className="relative bg-white/20 backdrop-blur-xl backdrop-saturate-150 text-black/80 w-20 h-20 rounded-full border-2 border-white/50 shadow-2xl flex items-center justify-center hover:bg-white/30 hover:text-black/90 focus:outline-none transition-all hover:scale-105 duration-300"
+          style={{
+            boxShadow: '0 0 20px rgba(255, 255, 255, 0.3), 0 0 40px rgba(147, 51, 234, 0.2), inset 0 0 20px rgba(255, 255, 255, 0.1)'
+          }}
           onClick={() => {
             if (!open) {
               setOpen(true);
@@ -140,8 +143,8 @@ export default function ChatBubble({ getContext }: ChatBubbleProps) {
           }}
         >
           <div className="flex flex-col items-center">
-            <span className="text-xs font-medium">AI</span>
-            <span className="text-[10px] opacity-80">Mochi</span>
+            <span className="text-sm font-medium">AI</span>
+            <span className="text-xs opacity-80">Mochi</span>
           </div>
         </button>
       </div>
