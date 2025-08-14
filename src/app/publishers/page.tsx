@@ -413,6 +413,20 @@ export default function PublishersPage() {
               </div>
             ))}
           </div>
+          
+          {/* Growth Summary Statistics */}
+          <div className="mt-4 p-3 bg-gradient-to-r from-gray-50 to-green-50 rounded-lg">
+            <h4 className="text-xs font-medium text-black/80 mb-2">Growth Dynamics</h4>
+            <div className="text-xs text-black/60 space-y-1">
+              <div>• <strong>Fastest Grower:</strong> {marketShareGrowth
+                .filter(p => p.growth > 0)
+                .sort((a, b) => b.growth - a.growth)[0]?.publisher || 'N/A'} at +{marketShareGrowth
+                .filter(p => p.growth > 0)
+                .sort((a, b) => b.growth - a.growth)[0]?.growth.toFixed(1) || '0'}% growth</div>
+              <div>• <strong>Growth vs Decline:</strong> {marketShareGrowth.filter(p => p.trend === "Growing").length} growing, {marketShareGrowth.filter(p => p.trend === "Declining").length} declining publishers</div>
+              <div>• <strong>Market Momentum:</strong> {marketShareGrowth.filter(p => p.growth > 0).length > marketShareGrowth.filter(p => p.growth < 0).length ? 'Positive - more publishers gaining share' : 'Mixed - balanced growth and decline'}</div>
+            </div>
+          </div>
         </div>
       </div>
 
