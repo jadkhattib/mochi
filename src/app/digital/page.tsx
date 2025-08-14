@@ -384,10 +384,16 @@ export default function DigitalDeepDivePage() {
               <div className="space-y-1">
                 <div>• <strong>Video Advantage:</strong> {videoStaticAnalysis.find(v => v.format === "Video")?.roi.toFixed(1) || "Higher"} ROI vs {videoStaticAnalysis.find(v => v.format === "Static")?.roi.toFixed(1) || "Lower"} for static</div>
                 <div>• <strong>Engagement Leader:</strong> Video drives {videoStaticAnalysis.find(v => v.format === "Video")?.engagementRate.toFixed(1) || "2.1"}% engagement rate</div>
-                <div>• <strong>Completion Rate:</strong> {videoStaticAnalysis.find(v => v.format === "Video")?.vtr ? (videoStaticAnalysis.find(v => v.format === "Video")?.vtr * 100).toFixed(1) : "65"}% VTR indicates strong creative quality</div>
+                <div>• <strong>Completion Rate:</strong> {(() => {
+                  const videoData = videoStaticAnalysis.find(v => v.format === "Video");
+                  return videoData?.vtr ? (videoData.vtr * 100).toFixed(1) : "65";
+                })()}% VTR indicates strong creative quality</div>
               </div>
               <div className="space-y-1">
-                <div>• <strong>Cost Efficiency:</strong> Static formats {videoStaticAnalysis.find(v => v.format === "Static")?.roi > 3 ? "remain viable" : "show lower efficiency"} for awareness campaigns</div>
+                <div>• <strong>Cost Efficiency:</strong> Static formats {(() => {
+                  const staticData = videoStaticAnalysis.find(v => v.format === "Static");
+                  return (staticData?.roi ?? 0) > 3 ? "remain viable" : "show lower efficiency";
+                })()} for awareness campaigns</div>
                 <div>• <strong>Platform Mix:</strong> Video excels on social platforms, static for display networks</div>
                 <div>• <strong>Strategy:</strong> 70% video, 30% static for optimal engagement and reach balance</div>
               </div>
