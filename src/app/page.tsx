@@ -3,7 +3,6 @@ import { useEffect, useMemo, useState } from "react";
 import { useDashboard } from "@/context/DashboardContext";
 import { ApiDataResponse } from "@/lib/types";
 import { filterRecords, toChannelContribution, sampleData } from "@/lib/transform";
-import { Filters } from "@/components/Filters";
 import { WorldMap } from "@/components/WorldMap";
 import { CircularFlag } from "@/components/CircularFlag";
 import { getCountryCode } from "@/lib/countryFlags";
@@ -159,10 +158,7 @@ export default function Overview() {
         <p className="text-sm text-black/70">Birds-eye view of portfolio performance across brands, markets, and channels</p>
       </header>
 
-      {/* Filters Section */}
-      <section className="mb-6">
-        <Filters />
-      </section>
+
 
       {/* Executive Summary KPIs - Row 1 */}
       <div className="grid grid-cols-4 gap-4 mb-4">
