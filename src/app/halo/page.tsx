@@ -60,6 +60,37 @@ export default function HaloSynergyPage() {
         <p className="text-sm text-black/70">Cross-brand halo effects, channel synergies, and optimal activation timing</p>
       </header>
 
+      {/* Strategic Halo & Synergy Recommendations */}
+      <div className="rounded-xl bg-gradient-to-r from-[#f3f2ef] to-white border border-black/10 p-4">
+        <h3 className="font-medium mb-3">Strategic Halo & Synergy Recommendations</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+          <div>
+            <h4 className="font-medium mb-2">Channel Coordination</h4>
+            <ul className="space-y-1 text-black/70">
+              <li>• Strongest synergy: <strong>{strongestSynergy ? `${strongestSynergy.channel1} + ${strongestSynergy.channel2}` : "TV + Digital"}</strong></li>
+              <li>• Coordinate launches within {avgSynergyIndex > 0.15 ? "1-2 weeks" : "2-4 weeks"} for maximum synergy</li>
+              <li>• Focus budget on high-synergy channel pairs first</li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-medium mb-2">Brand Portfolio</h4>
+            <ul className="space-y-1 text-black/70">
+              <li>• Top halo brand: <strong>{strongestHalo?.sourceBrand || "Brand A"}</strong></li>
+              <li>• Cross-brand campaigns show {avgSynergyIndex > 0.1 ? "positive" : "neutral"} lift</li>
+              <li>• Leverage {strongestHalo?.sourceBrand || "leading brand"} to support portfolio brands</li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-medium mb-2">Activation Strategy</h4>
+            <ul className="space-y-1 text-black/70">
+              <li>• Synchronize high-impact channels during key moments</li>
+              <li>• Stagger secondary channels for sustained momentum</li>
+              <li>• Monitor cross-channel frequency caps to avoid oversaturation</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
       {/* Key Halo & Synergy Insights */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="rounded-xl bg-white border border-black/10 p-4">
@@ -334,24 +365,6 @@ export default function HaloSynergyPage() {
               <li>• Coordinate {highSynergyPairs} channel pairs with &gt;15% synergy</li>
             </ul>
           </div>
-          <div>
-            <h4 className="font-medium mb-2">Brand Portfolio</h4>
-            <ul className="space-y-1 text-black/70">
-              <li>• Strong halo effects within category clusters</li>
-              <li>• {strongestHalo ? `${strongestHalo.sourceBrand} drives ${strongestHalo.targetBrand}` : "Cross-brand activation opportunities"}</li>
-              <li>• Coordinate portfolio campaigns for maximum halo</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-medium mb-2">Timing Strategy</h4>
-            <ul className="space-y-1 text-black/70">
-              <li>• TV + Digital: Launch simultaneously for +25% lift</li>
-              <li>• Seasonal: TV 1 week before digital (+18% lift)</li>
-              <li>• Product launches: Digital 3 days after TV (+22% lift)</li>
-            </ul>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

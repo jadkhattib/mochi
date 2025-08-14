@@ -45,6 +45,29 @@ export default function TVCTVPage() {
         <p className="text-sm text-black/70">Linear TV vs CTV performance, Prime Time optimization, BVOD/SVOD/AVOD analysis</p>
       </header>
 
+      {/* Recommendations */}
+      <div className="rounded-xl bg-gradient-to-r from-[#f3f2ef] to-white border border-black/10 p-4">
+        <h3 className="font-medium mb-3">TV & CTV Activation Recommendations</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+          <div>
+            <h4 className="font-medium mb-2">Prime Time Strategy</h4>
+            <ul className="space-y-1 text-black/70">
+              <li>• Current prime ratio: <strong>{(prime.prime / Math.max(1, prime.prime + prime.offPrime) * 100).toFixed(0)}%</strong></li>
+              <li>• Consider {prime.prime > prime.offPrime ? "reducing" : "increasing"} prime allocation based on ROI</li>
+              <li>• Test daypart rotation for frequency management</li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-medium mb-2">Platform Mix Optimization</h4>
+            <ul className="space-y-1 text-black/70">
+              <li>• Best performing platform: <strong>{platformBreakdown.length > 0 ? platformBreakdown.reduce((max, p) => p.roi > max.roi ? p : max, platformBreakdown[0]).platform : "N/A"}</strong></li>
+              <li>• Consider CTV for precise targeting with frequency caps</li>
+              <li>• Linear TV for mass reach during peak moments</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
       {/* Key Insights */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="rounded-xl bg-white border border-black/10 p-4">
@@ -265,28 +288,6 @@ export default function TVCTVPage() {
         </p>
       </div>
 
-      {/* Recommendations */}
-      <div className="rounded-xl bg-gradient-to-r from-[#f3f2ef] to-white border border-black/10 p-4">
-        <h3 className="font-medium mb-3">TV & CTV Activation Recommendations</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-          <div>
-            <h4 className="font-medium mb-2">Prime Time Strategy</h4>
-            <ul className="space-y-1 text-black/70">
-              <li>• Current prime ratio: <strong>{(prime.prime / Math.max(1, prime.prime + prime.offPrime) * 100).toFixed(0)}%</strong></li>
-              <li>• Consider {prime.prime > prime.offPrime ? "reducing" : "increasing"} prime allocation based on ROI</li>
-              <li>• Test daypart rotation for frequency management</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-medium mb-2">Platform Mix Optimization</h4>
-            <ul className="space-y-1 text-black/70">
-              <li>• Best performing platform: <strong>{platformBreakdown.length > 0 ? platformBreakdown.reduce((max, p) => p.roi > max.roi ? p : max, platformBreakdown[0]).platform : "N/A"}</strong></li>
-              <li>• Consider CTV for precise targeting with frequency caps</li>
-              <li>• Linear TV for mass reach during peak moments</li>
-            </ul>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

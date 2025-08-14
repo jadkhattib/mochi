@@ -57,6 +57,37 @@ export default function TargetingPage() {
         <p className="text-sm text-black/70">Strategy segments vs BAU, 1st party data impact, and funnel optimization insights</p>
       </header>
 
+      {/* Strategic Targeting & Funnel Recommendations */}
+      <div className="rounded-xl bg-gradient-to-r from-[#f3f2ef] to-white border border-black/10 p-4">
+        <h3 className="font-medium mb-3">Strategic Targeting & Funnel Recommendations</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+          <div>
+            <h4 className="font-medium mb-2">Audience Strategy</h4>
+            <ul className="space-y-1 text-black/70">
+              <li>• Best targeting: <strong>{bestTargeting?.targeting || "1st Party"}</strong> ({bestTargeting?.avgROI.toFixed(2) || "6.2"} ROI)</li>
+              <li>• Focus funnel investment on {topStage?.stage || "Awareness"} stage</li>
+              <li>• Leverage 1st party data for {bestTargeting?.avgROI > 5 ? "scaling" : "testing"}</li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-medium mb-2">Funnel Optimization</h4>
+            <ul className="space-y-1 text-black/70">
+              <li>• Top performing stage: <strong>{topStage?.stage || "Consideration"}</strong></li>
+              <li>• Balance reach vs precision based on funnel objectives</li>
+              <li>• Cross-stage attribution shows {avgConversionRate > 0.05 ? "strong" : "moderate"} performance</li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-medium mb-2">Activation Tactics</h4>
+            <ul className="space-y-1 text-black/70">
+              <li>• Sequential targeting through funnel stages</li>
+              <li>• Retarget {topStage?.stage || "awareness"} audiences for conversion</li>
+              <li>• A/B test audience expansion vs precision</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
       {/* Key Targeting & Funnel Insights */}
       <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
         <div className="rounded-xl bg-white border border-black/10 p-4">
@@ -395,23 +426,6 @@ export default function TargetingPage() {
             </ul>
           </div>
           <div>
-            <h4 className="font-medium mb-2">Funnel Optimization</h4>
-            <ul className="space-y-1 text-black/70">
-              <li>• Awareness: {funnelBudgetAllocation[0]?.shareOfTotal.toFixed(0) || "45"}% budget allocation optimal</li>
-              <li>• Conversion rate: {avgConversionRate.toFixed(2)}% stage performance</li>
-              <li>• Focus on reducing {funnelConversionFlow.find(f => f.dropOff > 80)?.stage || "Consideration"} drop-off</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-medium mb-2">Audience Strategy</h4>
-            <ul className="space-y-1 text-black/70">
-              <li>• Custom segments outperform broad by 3.2x</li>
-              <li>• Cross-channel consistency improves CTR by 45%</li>
-              <li>• CDP integration increases conversion rates</li>
-            </ul>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
