@@ -43,12 +43,16 @@ export default function ChatBubble({ getContext }: ChatBubbleProps) {
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") {
-        setShowMessages(false);
+        if (showMessages) {
+          setShowMessages(false);
+        } else {
+          setOpen(false);
+        }
       }
     }
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, []);
+  }, [showMessages]);
 
   // Focus input when opened
   useEffect(() => {
@@ -97,7 +101,7 @@ export default function ChatBubble({ getContext }: ChatBubbleProps) {
         className="fixed bottom-6 right-6 z-50 rounded-full shadow-lg border border-black/10 bg-[#2d2d2d] text-white w-16 h-16 flex items-center justify-center hover:opacity-90 focus:outline-none transition-all hover:scale-105"
         onClick={() => {
           setOpen(true);
-          setShowMessages(true);
+          setShowMessages(false);
         }}
       >
         <div className="flex flex-col items-center">
@@ -106,13 +110,7 @@ export default function ChatBubble({ getContext }: ChatBubbleProps) {
         </div>
       </button>
 
-      {/* Overlay */}
-      {showMessages && (
-        <div 
-          className="fixed inset-0 bg-black/20 z-40 transition-all duration-300"
-          onClick={() => setShowMessages(false)}
-        />
-      )}
+
 
       {/* Chat Interface */}
       <div
@@ -193,6 +191,7 @@ export default function ChatBubble({ getContext }: ChatBubbleProps) {
                 ref={inputRef}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
+                onClick={() => setShowMessages(true)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") send();
                 }}
