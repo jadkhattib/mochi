@@ -72,9 +72,9 @@ export default function DigitalDeepDivePage() {
           <div>
             <h4 className="font-medium mb-2">Targeting & Buying</h4>
             <ul className="space-y-1 text-black/70">
-              <li>• Best buying type: <strong>{bestBuyingType?.type || "Programmatic"}</strong> ({bestBuyingType?.roi.toFixed(2) || "5.8"} ROI)</li>
+              <li>• Best buying type: <strong>{bestBuyingType?.type || "Programmatic"}</strong> ({bestBuyingType?.roi?.toFixed(2) || "5.8"} ROI)</li>
               <li>• {targetingAnalysis.find(t => t.targeting === "1st Party")?.roi > targetingAnalysis.find(t => t.targeting === "Standard")?.roi ? "Prioritize" : "Test"} 1st party data segments</li>
-              <li>• Viewability threshold: maintain >{(avgViewability * 100).toFixed(0)}% minimum</li>
+              <li>• Viewability threshold: maintain &gt;{(avgViewability * 100).toFixed(0)}% minimum</li>
             </ul>
           </div>
           <div>
