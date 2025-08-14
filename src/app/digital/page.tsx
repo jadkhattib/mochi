@@ -80,7 +80,7 @@ export default function DigitalDeepDivePage() {
           <div>
             <h4 className="font-medium mb-2">Budget Allocation</h4>
             <ul className="space-y-1 text-black/70">
-              <li>• Funnel optimization: Focus on {funnelAllocation.reduce((max, f) => f.roi > max.roi ? f : max, funnelAllocation[0])?.stage || "Awareness"} stage</li>
+              <li>• Funnel optimization: Focus on {funnelAnalysis.reduce((max, f) => f.roi > max.roi ? f : max, funnelAnalysis[0])?.stage || "Awareness"} stage</li>
               <li>• Cross-platform frequency capping recommended</li>
               <li>• A/B test creative rotation frequency</li>
             </ul>
