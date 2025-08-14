@@ -118,21 +118,18 @@ export default function ChatBubble({ getContext }: ChatBubbleProps) {
         {/* Glowing Effect - Only show when chat is closed */}
         {!open && (
           <>
-            <div className="absolute inset-0 rounded-full bg-blue-500/30 blur-lg" style={{
-              animation: 'purplePulse 2s ease-in-out infinite'
+            <div className="absolute inset-0 rounded-full border-2 border-purple-500/40 blur-sm" style={{
+              animation: 'purplePulse 3s ease-in-out infinite'
             }}></div>
-            <div className="absolute inset-0 rounded-full bg-purple-400/20 blur-xl" style={{
-              animation: 'purplePulse 2s ease-in-out infinite 1s'
+            <div className="absolute inset-0 rounded-full border border-purple-400/30 blur-md" style={{
+              animation: 'purplePulse 3s ease-in-out infinite 1.5s'
             }}></div>
           </>
         )}
         
         <button
           title="Ask Mochi AI"
-          className="relative bg-white/20 backdrop-blur-xl backdrop-saturate-150 text-black/80 w-20 h-20 rounded-full border-2 border-white/50 shadow-2xl flex items-center justify-center hover:bg-white/30 hover:text-black/90 focus:outline-none transition-all hover:scale-105 duration-300"
-          style={{
-            boxShadow: '0 0 20px rgba(255, 255, 255, 0.3), 0 0 40px rgba(147, 51, 234, 0.2), inset 0 0 20px rgba(255, 255, 255, 0.1)'
-          }}
+          className="relative bg-white/15 backdrop-blur-2xl backdrop-saturate-200 text-black/80 w-20 h-20 rounded-full border border-purple-400/60 shadow-2xl shadow-purple-400/20 flex items-center justify-center hover:bg-white/25 hover:text-black/90 hover:border-purple-500/70 focus:outline-none transition-all hover:scale-105 duration-300"
           onClick={() => {
             if (!open) {
               setOpen(true);
