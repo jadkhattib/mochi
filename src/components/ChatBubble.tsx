@@ -2,13 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { clsx } from "clsx";
 
-// Add custom CSS for the rotating border animation
-const style = {
-  '@keyframes rotate': {
-    '0%': { transform: 'rotate(0deg)' },
-    '100%': { transform: 'rotate(360deg)' }
-  }
-};
+
 
 function formatMarkdown(text: string): string {
   return text
@@ -43,18 +37,7 @@ export default function ChatBubble({ getContext }: ChatBubbleProps) {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
-  // Add custom CSS for rotation
-  useEffect(() => {
-    const styleSheet = document.createElement("style");
-    styleSheet.innerText = `
-      @keyframes rotate {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-      }
-    `;
-    document.head.appendChild(styleSheet);
-    return () => document.head.removeChild(styleSheet);
-  }, []);
+
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
@@ -199,71 +182,54 @@ export default function ChatBubble({ getContext }: ChatBubbleProps) {
         {/* Input Section */}
         <div className="max-w-4xl mx-auto px-6 pb-8">
           <div className="relative">
-            {/* Input Container with Illuminating Border */}
-            <div className="relative">
-              {/* Animated Border Light */}
-              <div className="absolute inset-0 rounded-full">
-                <div 
-                  className="absolute w-full h-full rounded-full"
-                  style={{
-                    background: 'conic-gradient(from 0deg, transparent 270deg, #3b82f6 360deg)',
-                    animation: 'rotate 2s linear infinite',
-                    padding: '2px'
-                  }}
-                >
-                  <div className="w-full h-full rounded-full bg-white"></div>
-                </div>
-              </div>
-              
-              {/* Main Input */}
-              <div className="relative bg-white rounded-full shadow-2xl border-2 border-blue-200/50 flex items-center p-2">
-                <input
-                  ref={inputRef}
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") send();
-                  }}
-                  placeholder="Ask Mochi about your data, charts, insights..."
-                  className="flex-1 px-6 py-4 text-base bg-transparent focus:outline-none placeholder-black/40"
-                  disabled={isTyping}
-                />
-                <button
-                  onClick={send}
-                  disabled={!input.trim() || isTyping}
-                  className={clsx(
-                    "rounded-full text-white text-sm px-6 py-4 transition-all flex items-center gap-2 font-medium",
-                    (!input.trim() || isTyping)
-                      ? "bg-black/20 cursor-not-allowed" 
-                      : "bg-[#2d2d2d] hover:bg-black shadow-md hover:shadow-lg active:scale-95"
-                  )}
-                >
-                  {isTyping ? (
-                    <>
-                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                      <span>Thinking...</span>
-                    </>
-                  ) : (
-                    <>
-                      <span>Ask</span>
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                      </svg>
-                    </>
-                  )}
-                </button>
-              </div>
+            {/* Input Container */}
+            <div className="relative bg-white rounded-full shadow-2xl border border-black/10 flex items-center p-2">
+              <input
+                ref={inputRef}
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") send();
+                }}
+                placeholder="Ask Mochi about your data, charts, insights..."
+                className="flex-1 px-6 py-4 text-base bg-transparent focus:outline-none placeholder-black/40"
+                disabled={isTyping}
+              />
+              <button
+                onClick={send}
+                disabled={!input.trim() || isTyping}
+                className={clsx(
+                  "rounded-full text-white text-sm px-6 py-4 transition-all flex items-center gap-2 font-medium",
+                  (!input.trim() || isTyping)
+                    ? "bg-black/20 cursor-not-allowed" 
+                    : "bg-[#2d2d2d] hover:bg-black shadow-md hover:shadow-lg active:scale-95"
+                )}
+              >
+                {isTyping ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                    <span>Thinking...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Ask</span>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                    </svg>
+                  </>
+                )}
+              </button>
             </div>
-
-            {/* Hint text - only show when no messages */}
-            {messages.length === 0 && (
-              <div className="text-center mt-4">
-                <p className="text-sm text-white/80 bg-black/20 rounded-full px-4 py-2 inline-block">
-                  Ask about ROI trends, channel performance, seasonal insights, or any data on screen
-                </p>
-              </div>
-            )}
           </div>
+
+          {/* Hint text - only show when no messages */}
+          {messages.length === 0 && (
+            <div className="text-center mt-4">
+              <p className="text-sm text-white/80 bg-black/20 rounded-full px-4 py-2 inline-block">
+                Ask about ROI trends, channel performance, seasonal insights, or any data on screen
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </>
