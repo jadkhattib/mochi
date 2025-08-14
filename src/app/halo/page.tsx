@@ -361,10 +361,28 @@ export default function HaloSynergyPage() {
             <h4 className="font-medium mb-2">Channel Coordination</h4>
             <ul className="space-y-1 text-black/70">
               <li>• Strongest synergy: <strong>{strongestSynergy ? `${strongestSynergy.channel1} + ${strongestSynergy.channel2}` : "TV + Digital"}</strong></li>
-              <li>• Activate high-synergy pairs (+{strongestSynergy?.liftPercent.toFixed(0) || "25"}% lift) simultaneously</li>
+              <li>• Activate high-synergy pairs (+{strongestSynergy?.liftPercent?.toFixed(0) || "25"}% lift) simultaneously</li>
               <li>• Coordinate {highSynergyPairs} channel pairs with &gt;15% synergy</li>
             </ul>
           </div>
+          <div>
+            <h4 className="font-medium mb-2">Brand Portfolio</h4>
+            <ul className="space-y-1 text-black/70">
+              <li>• Top halo brand: <strong>{strongestHalo?.sourceBrand || "Brand A"}</strong></li>
+              <li>• Cross-brand campaigns show {avgSynergyIndex > 0.1 ? "positive" : "neutral"} lift</li>
+              <li>• Leverage {strongestHalo?.sourceBrand || "leading brand"} to support portfolio brands</li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-medium mb-2">Activation Strategy</h4>
+            <ul className="space-y-1 text-black/70">
+              <li>• Synchronize high-impact channels during key moments</li>
+              <li>• Stagger secondary channels for sustained momentum</li>
+              <li>• Monitor cross-channel frequency caps to avoid oversaturation</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

@@ -64,9 +64,9 @@ export default function TargetingPage() {
           <div>
             <h4 className="font-medium mb-2">Audience Strategy</h4>
             <ul className="space-y-1 text-black/70">
-              <li>• Best targeting: <strong>{bestTargeting?.targeting || "1st Party"}</strong> ({bestTargeting?.avgROI?.toFixed(2) || "6.2"} ROI)</li>
-              <li>• Focus funnel investment on {topStage?.stage || "Awareness"} stage</li>
-              <li>• Leverage 1st party data for {bestTargeting?.avgROI > 5 ? "scaling" : "testing"}</li>
+              <li>• Best targeting: <strong>{topTargeting?.targeting || "1st Party"}</strong> ({topTargeting?.roi?.toFixed(2) || "6.2"} ROI)</li>
+              <li>• Focus funnel investment on {topTargeting?.targeting || "Awareness"} stage</li>
+              <li>• Leverage 1st party data for {firstPartyROI > 5 ? "scaling" : "testing"}</li>
             </ul>
           </div>
           <div>
