@@ -221,19 +221,19 @@ export default function HaloSynergyPage() {
       <div className="rounded-xl bg-white border border-black/10 p-4">
         <h3 className="font-medium mb-4">Channel Network Strength</h3>
         
-        {/* Network Visualization with Modern Design */}
+        {/* Network Visualization with Fixed Layout */}
         <div className="relative overflow-hidden">
           {/* Background gradient */}
           <div className="absolute inset-0 bg-gradient-to-r from-blue-50 via-purple-50 to-orange-50 rounded-lg opacity-60"></div>
           
-          {/* Main network container */}
-          <div className="relative p-8" style={{ height: '320px' }}>
+          {/* Fixed layout container with precise positioning */}
+          <div className="relative mx-auto" style={{ width: '700px', height: '320px' }}>
             
-            {/* Channel nodes arranged in a better layout */}
+            {/* Channel nodes with fixed positions */}
             <div className="absolute inset-0">
               
-              {/* Linear TV - Top Left */}
-              <div className="absolute top-12 left-16 group cursor-pointer">
+              {/* Linear TV - Fixed position */}
+              <div className="absolute group cursor-pointer" style={{ top: '48px', left: '64px' }}>
                 <div className="relative">
                   <div className="w-16 h-16 bg-gradient-to-br from-gray-700 to-gray-900 rounded-xl flex items-center justify-center text-white font-bold shadow-xl border-2 border-white transform transition-transform group-hover:scale-110">
                     <span className="text-sm">TV</span>
@@ -243,10 +243,10 @@ export default function HaloSynergyPage() {
                 </div>
               </div>
               
-              {/* CTV - Top Center */}
-              <div className="absolute top-8 left-1/2 transform -translate-x-1/2 group cursor-pointer">
+              {/* CTV - Fixed center position */}
+              <div className="absolute group cursor-pointer" style={{ top: '32px', left: '342px' }}>
                 <div className="relative">
-                  <div className="w-18 h-18 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center text-white font-bold shadow-xl border-2 border-white transform transition-transform group-hover:scale-110">
+                  <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center text-white font-bold shadow-xl border-2 border-white transform transition-transform group-hover:scale-110">
                     <span className="text-sm">CTV</span>
                   </div>
                   <div className="absolute -top-1 -right-1 w-5 h-5 bg-blue-500 rounded-full border-2 border-white"></div>
@@ -254,8 +254,8 @@ export default function HaloSynergyPage() {
                 </div>
               </div>
               
-              {/* Meta - Top Right */}
-              <div className="absolute top-12 right-16 group cursor-pointer">
+              {/* Meta - Fixed position */}
+              <div className="absolute group cursor-pointer" style={{ top: '48px', left: '572px' }}>
                 <div className="relative">
                   <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-700 rounded-xl flex items-center justify-center text-white font-bold shadow-xl border-2 border-white transform transition-transform group-hover:scale-110">
                     <span className="text-xs">META</span>
@@ -265,8 +265,8 @@ export default function HaloSynergyPage() {
                 </div>
               </div>
               
-              {/* Google - Middle Left */}
-              <div className="absolute top-1/2 left-8 transform -translate-y-1/2 group cursor-pointer">
+              {/* Google - Fixed position */}
+              <div className="absolute group cursor-pointer" style={{ top: '138px', left: '32px' }}>
                 <div className="relative">
                   <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-green-700 rounded-xl flex items-center justify-center text-white font-bold shadow-xl border-2 border-white transform transition-transform group-hover:scale-110">
                     <span className="text-sm">GOOG</span>
@@ -276,8 +276,8 @@ export default function HaloSynergyPage() {
                 </div>
               </div>
               
-              {/* TikTok - Middle Right */}
-              <div className="absolute top-1/2 right-8 transform -translate-y-1/2 group cursor-pointer">
+              {/* TikTok - Fixed position */}
+              <div className="absolute group cursor-pointer" style={{ top: '138px', left: '604px' }}>
                 <div className="relative">
                   <div className="w-16 h-16 bg-gradient-to-br from-pink-500 to-purple-600 rounded-xl flex items-center justify-center text-white font-bold shadow-xl border-2 border-white transform transition-transform group-hover:scale-110">
                     <span className="text-xs">TIKTOK</span>
@@ -287,8 +287,8 @@ export default function HaloSynergyPage() {
                 </div>
               </div>
               
-              {/* Amazon - Bottom Left */}
-              <div className="absolute bottom-12 left-24 group cursor-pointer">
+              {/* Amazon - Fixed position */}
+              <div className="absolute group cursor-pointer" style={{ top: '208px', left: '156px' }}>
                 <div className="relative">
                   <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-700 rounded-xl flex items-center justify-center text-white font-bold shadow-xl border-2 border-white transform transition-transform group-hover:scale-110">
                     <span className="text-xs">AMZN</span>
@@ -298,8 +298,8 @@ export default function HaloSynergyPage() {
                 </div>
               </div>
               
-              {/* Promo - Bottom Right */}
-              <div className="absolute bottom-12 right-24 group cursor-pointer">
+              {/* Promo - Fixed position */}
+              <div className="absolute group cursor-pointer" style={{ top: '208px', left: '476px' }}>
                 <div className="relative">
                   <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-red-700 rounded-xl flex items-center justify-center text-white font-bold shadow-xl border-2 border-white transform transition-transform group-hover:scale-110">
                     <span className="text-xs">PROMO</span>
@@ -309,7 +309,7 @@ export default function HaloSynergyPage() {
                 </div>
               </div>
               
-              {/* Dynamic Connection Lines with Glow Effects */}
+              {/* SVG with exact coordinates matching fixed positions */}
               <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ filter: 'drop-shadow(0 0 4px rgba(0,0,0,0.1))' }}>
                 <defs>
                   <linearGradient id="strongGradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -326,37 +326,37 @@ export default function HaloSynergyPage() {
                   </linearGradient>
                 </defs>
                 
-                {/* TV (80,80) to CTV (center ~300,60) - Strong synergy */}
-                <line x1="80" y1="80" x2="300" y2="60" stroke="url(#strongGradient)" strokeWidth="6" strokeLinecap="round">
+                {/* TV center (96,80) to CTV center (374,64) - Strong synergy */}
+                <line x1="96" y1="80" x2="374" y2="64" stroke="url(#strongGradient)" strokeWidth="6" strokeLinecap="round">
                   <animate attributeName="stroke-dasharray" values="0,20;20,0" dur="3s" repeatCount="indefinite"/>
                 </line>
                 
-                {/* Google (80,160) to CTV (300,60) - Strong synergy */}
-                <line x1="80" y1="160" x2="300" y2="60" stroke="url(#strongGradient)" strokeWidth="5" strokeLinecap="round">
+                {/* Google center (72,178) to CTV center (374,64) - Strong synergy */}
+                <line x1="72" y1="178" x2="374" y2="64" stroke="url(#strongGradient)" strokeWidth="5" strokeLinecap="round">
                   <animate attributeName="stroke-dasharray" values="0,15;15,0" dur="4s" repeatCount="indefinite"/>
                 </line>
                 
-                {/* CTV (300,60) to Meta (520,80) - Good synergy */}
-                <line x1="300" y1="60" x2="520" y2="80" stroke="url(#mediumGradient)" strokeWidth="4" strokeLinecap="round" strokeDasharray="8,4">
+                {/* CTV center (374,64) to Meta center (604,80) - Good synergy */}
+                <line x1="374" y1="64" x2="604" y2="80" stroke="url(#mediumGradient)" strokeWidth="4" strokeLinecap="round" strokeDasharray="8,4">
                   <animate attributeName="stroke-dashoffset" values="0;12" dur="2s" repeatCount="indefinite"/>
                 </line>
                 
-                {/* Google (80,160) to TikTok (560,160) - Good synergy */}
-                <line x1="80" y1="160" x2="560" y2="160" stroke="url(#mediumGradient)" strokeWidth="4" strokeLinecap="round" strokeDasharray="8,4">
+                {/* Google center (72,178) to TikTok center (636,170) - Good synergy */}
+                <line x1="72" y1="178" x2="636" y2="170" stroke="url(#mediumGradient)" strokeWidth="4" strokeLinecap="round" strokeDasharray="8,4">
                   <animate attributeName="stroke-dashoffset" values="0;12" dur="2.5s" repeatCount="indefinite"/>
                 </line>
                 
-                {/* TV (80,80) to Amazon (160,240) - Moderate synergy */}
-                <line x1="80" y1="80" x2="160" y2="240" stroke="url(#moderateGradient)" strokeWidth="3" strokeLinecap="round" strokeDasharray="4,8" opacity="0.7"/>
+                {/* TV center (96,80) to Amazon center (188,240) - Moderate synergy */}
+                <line x1="96" y1="80" x2="188" y2="240" stroke="url(#moderateGradient)" strokeWidth="3" strokeLinecap="round" strokeDasharray="4,8" opacity="0.7"/>
                 
-                {/* Meta (520,80) to Promo (440,240) - Moderate synergy */}
-                <line x1="520" y1="80" x2="440" y2="240" stroke="url(#moderateGradient)" strokeWidth="3" strokeLinecap="round" strokeDasharray="4,8" opacity="0.7"/>
+                {/* Meta center (604,80) to Promo center (508,240) - Moderate synergy */}
+                <line x1="604" y1="80" x2="508" y2="240" stroke="url(#moderateGradient)" strokeWidth="3" strokeLinecap="round" strokeDasharray="4,8" opacity="0.7"/>
                 
-                {/* Amazon (160,240) to Promo (440,240) - Moderate synergy */}
-                <line x1="160" y1="240" x2="440" y2="240" stroke="url(#moderateGradient)" strokeWidth="2" strokeLinecap="round" strokeDasharray="6,6" opacity="0.6"/>
+                {/* Amazon center (188,240) to Promo center (508,240) - Moderate synergy */}
+                <line x1="188" y1="240" x2="508" y2="240" stroke="url(#moderateGradient)" strokeWidth="2" strokeLinecap="round" strokeDasharray="6,6" opacity="0.6"/>
                 
-                {/* TikTok (560,160) to Meta (520,80) - Cross synergy */}
-                <line x1="560" y1="160" x2="520" y2="80" stroke="url(#moderateGradient)" strokeWidth="3" strokeLinecap="round" strokeDasharray="5,5" opacity="0.5"/>
+                {/* TikTok center (636,170) to Meta center (604,80) - Cross synergy */}
+                <line x1="636" y1="170" x2="604" y2="80" stroke="url(#moderateGradient)" strokeWidth="3" strokeLinecap="round" strokeDasharray="5,5" opacity="0.5"/>
               </svg>
             </div>
           </div>
