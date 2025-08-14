@@ -113,24 +113,38 @@ export default function ChatBubble({ getContext }: ChatBubbleProps) {
 
   return (
     <>
-      {/* AI Button */}
-      <button
-        title="Ask Mochi AI"
-        className="fixed bottom-6 right-6 z-50 rounded-full shadow-lg border border-black/10 bg-[#2d2d2d] text-white w-16 h-16 flex items-center justify-center hover:opacity-90 focus:outline-none transition-all hover:scale-105"
-        onClick={() => {
-          if (!open) {
-            setOpen(true);
-            setShowMessages(false);
-          } else {
-            setShowMessages(true);
-          }
-        }}
-      >
-        <div className="flex flex-col items-center">
-          <span className="text-xs font-medium">AI</span>
-          <span className="text-[10px] opacity-80">Mochi</span>
-        </div>
-      </button>
+      {/* Glassy AI Button with Glow */}
+      <div className="fixed bottom-6 right-6 z-50">
+        {/* Glowing Effect - Only show when chat is closed */}
+        {!open && (
+          <>
+            <div className="absolute inset-0 rounded-full bg-blue-500/30 blur-lg" style={{
+              animation: 'purplePulse 2s ease-in-out infinite'
+            }}></div>
+            <div className="absolute inset-0 rounded-full bg-purple-400/20 blur-xl" style={{
+              animation: 'purplePulse 2s ease-in-out infinite 1s'
+            }}></div>
+          </>
+        )}
+        
+        <button
+          title="Ask Mochi AI"
+          className="relative bg-white/20 backdrop-blur-xl backdrop-saturate-150 text-black/80 w-16 h-16 rounded-full border border-white/30 shadow-2xl flex items-center justify-center hover:bg-white/30 hover:text-black/90 focus:outline-none transition-all hover:scale-105 duration-300"
+          onClick={() => {
+            if (!open) {
+              setOpen(true);
+              setShowMessages(false);
+            } else {
+              setShowMessages(true);
+            }
+          }}
+        >
+          <div className="flex flex-col items-center">
+            <span className="text-xs font-medium">AI</span>
+            <span className="text-[10px] opacity-80">Mochi</span>
+          </div>
+        </button>
+      </div>
 
 
 
