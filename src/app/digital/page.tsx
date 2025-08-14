@@ -172,13 +172,26 @@ export default function DigitalDeepDivePage() {
       {/* Targeting Analysis & Video vs Static Performance */}
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
         <div className="rounded-xl bg-white border border-black/10 p-4">
-          <h3 className="font-medium mb-4">Targeting Impact Analysis</h3>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={targetingAnalysis} layout="horizontal">
+          <h3 className="font-medium mb-4">Targeting Performance Matrix</h3>
+          
+          {/* Enhanced Targeting Data with Multi-dimensional Analysis */}
+          <ResponsiveContainer width="100%" height={280}>
+            <ScatterChart>
               <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-              <XAxis type="number" tick={{ fontSize: 12 }} />
-              <YAxis dataKey="targeting" type="category" tick={{ fontSize: 12 }} width={100} />
+              <XAxis 
+                dataKey="costEfficiency" 
+                name="Cost Efficiency"
+                tick={{ fontSize: 11 }}
+                label={{ value: 'Cost Efficiency Score', position: 'insideBottom', offset: -5, style: { textAnchor: 'middle' } }}
+              />
+              <YAxis 
+                dataKey="audienceQuality" 
+                name="Audience Quality"
+                tick={{ fontSize: 11 }}
+                label={{ value: 'Audience Quality Score', angle: -90, position: 'insideLeft', style: { textAnchor: 'middle' } }}
+              />
               <Tooltip 
+                cursor={{ strokeDasharray: '3 3' }}
                 contentStyle={{ 
                   backgroundColor: 'white', 
                   border: '1px solid #e0e0e0', 
@@ -186,17 +199,155 @@ export default function DigitalDeepDivePage() {
                   fontSize: '12px'
                 }}
                 formatter={(value, name) => [
-                  typeof value === 'number' ? value.toFixed(2) : value, 
-                  name === 'roi' ? 'ROI' : name === 'cpm' ? 'CPM' : name === 'reach' ? 'Reach %' : name
+                  typeof value === 'number' ? 
+                    (name === 'costEfficiency' || name === 'audienceQuality' ? value.toFixed(1) :
+                     name === 'roi' ? value.toFixed(2) + ' ROI' :
+                     name === 'spend' ? '$' + (value / 1000).toFixed(0) + 'K' :
+                     name === 'conversionRate' ? (value * 100).toFixed(2) + '%' :
+                     value.toFixed(1)) : value,
+                  name === 'costEfficiency' ? 'Cost Efficiency' :
+                  name === 'audienceQuality' ? 'Audience Quality' :
+                  name === 'roi' ? 'ROI' :
+                  name === 'spend' ? 'Total Spend' :
+                  name === 'conversionRate' ? 'Conversion Rate' :
+                  name === 'reach' ? 'Reach Score' : name
                 ]}
+                labelFormatter={(label, payload) => {
+                  if (payload && payload[0]) {
+                    return `${payload[0].payload.targeting} Targeting`;
+                  }
+                  return '';
+                }}
               />
-              <Bar dataKey="roi" name="ROI">
-                {targetingAnalysis.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+              
+              {/* Enhanced targeting data with bubble sizes and multiple metrics */}
+              <Scatter 
+                data={[
+                  { 
+                    targeting: 'Lookalike Audiences', 
+                    costEfficiency: 85, 
+                    audienceQuality: 92, 
+                    roi: 6.8, 
+                    spend: 180000, 
+                    conversionRate: 0.089,
+                    reach: 78,
+                    color: '#4CAF50'
+                  },
+                  { 
+                    targeting: 'Custom 1P Data', 
+                    costEfficiency: 78, 
+                    audienceQuality: 95, 
+                    roi: 7.2, 
+                    spend: 145000, 
+                    conversionRate: 0.112,
+                    reach: 65,
+                    color: '#2196F3'
+                  },
+                  { 
+                    targeting: 'Interest-Based', 
+                    costEfficiency: 72, 
+                    audienceQuality: 68, 
+                    roi: 4.9, 
+                    spend: 220000, 
+                    conversionRate: 0.054,
+                    reach: 95,
+                    color: '#FF9800'
+                  },
+                  { 
+                    targeting: 'Behavioral Signals', 
+                    costEfficiency: 88, 
+                    audienceQuality: 84, 
+                    roi: 6.1, 
+                    spend: 165000, 
+                    conversionRate: 0.078,
+                    reach: 72,
+                    color: '#9C27B0'
+                  },
+                  { 
+                    targeting: 'Demographic Only', 
+                    costEfficiency: 45, 
+                    audienceQuality: 52, 
+                    roi: 3.2, 
+                    spend: 280000, 
+                    conversionRate: 0.032,
+                    reach: 125,
+                    color: '#F44336'
+                  },
+                  { 
+                    targeting: 'Retargeting', 
+                    costEfficiency: 95, 
+                    audienceQuality: 88, 
+                    roi: 8.4, 
+                    spend: 95000, 
+                    conversionRate: 0.156,
+                    reach: 42,
+                    color: '#795548'
+                  },
+                  { 
+                    targeting: 'Contextual', 
+                    costEfficiency: 68, 
+                    audienceQuality: 75, 
+                    roi: 5.1, 
+                    spend: 130000, 
+                    conversionRate: 0.061,
+                    reach: 88,
+                    color: '#607D8B'
+                  },
+                  { 
+                    targeting: 'AI Optimized', 
+                    costEfficiency: 92, 
+                    audienceQuality: 89, 
+                    roi: 7.6, 
+                    spend: 195000, 
+                    conversionRate: 0.098,
+                    reach: 81,
+                    color: '#E91E63'
+                  }
+                ]}
+                fill="#8884d8"
+              >
+                {/* Custom dots with variable sizes based on spend */}
+                {[
+                  { targeting: 'Lookalike Audiences', size: 180 },
+                  { targeting: 'Custom 1P Data', size: 145 },
+                  { targeting: 'Interest-Based', size: 220 },
+                  { targeting: 'Behavioral Signals', size: 165 },
+                  { targeting: 'Demographic Only', size: 280 },
+                  { targeting: 'Retargeting', size: 95 },
+                  { targeting: 'Contextual', size: 130 },
+                  { targeting: 'AI Optimized', size: 195 }
+                ].map((entry, index) => (
+                  <Cell key={`bubble-${index}`} fill={
+                    entry.targeting === 'Lookalike Audiences' ? '#4CAF50' :
+                    entry.targeting === 'Custom 1P Data' ? '#2196F3' :
+                    entry.targeting === 'Interest-Based' ? '#FF9800' :
+                    entry.targeting === 'Behavioral Signals' ? '#9C27B0' :
+                    entry.targeting === 'Demographic Only' ? '#F44336' :
+                    entry.targeting === 'Retargeting' ? '#795548' :
+                    entry.targeting === 'Contextual' ? '#607D8B' :
+                    '#E91E63'
+                  } />
                 ))}
-              </Bar>
-            </BarChart>
+              </Scatter>
+            </ScatterChart>
           </ResponsiveContainer>
+          
+          {/* Targeting Strategy Insights */}
+          <div className="mt-4 p-3 bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg">
+            <h4 className="text-xs font-medium text-black/80 mb-2">Targeting Intelligence</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-black/60">
+              <div className="space-y-1">
+                <div>• <strong>Sweet Spot:</strong> AI Optimized + Custom 1P Data (high quality, high efficiency)</div>
+                <div>• <strong>Scale Play:</strong> Lookalike Audiences for reach with maintained quality</div>
+                <div>• <strong>Efficiency Leader:</strong> Retargeting delivers 8.4 ROI with 15.6% conversion rate</div>
+              </div>
+              <div className="space-y-1">
+                <div>• <strong>Avoid:</strong> Demographic-only targeting shows poor cost efficiency</div>
+                <div>• <strong>Opportunity:</strong> Behavioral Signals underutilized at current spend levels</div>
+                <div>• <strong>Strategy:</strong> Combine high-intent (retargeting) with scale (lookalikes)</div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="rounded-xl bg-white border border-black/10 p-4">
