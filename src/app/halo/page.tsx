@@ -326,26 +326,37 @@ export default function HaloSynergyPage() {
                   </linearGradient>
                 </defs>
                 
-                {/* Strongest synergies - thick animated lines */}
-                <line x1="100" y1="80" x2="300" y2="60" stroke="url(#strongGradient)" strokeWidth="6" strokeLinecap="round">
+                {/* TV (80,80) to CTV (center ~300,60) - Strong synergy */}
+                <line x1="80" y1="80" x2="300" y2="60" stroke="url(#strongGradient)" strokeWidth="6" strokeLinecap="round">
                   <animate attributeName="stroke-dasharray" values="0,20;20,0" dur="3s" repeatCount="indefinite"/>
                 </line>
-                <line x1="120" y1="160" x2="320" y2="80" stroke="url(#strongGradient)" strokeWidth="5" strokeLinecap="round">
+                
+                {/* Google (80,160) to CTV (300,60) - Strong synergy */}
+                <line x1="80" y1="160" x2="300" y2="60" stroke="url(#strongGradient)" strokeWidth="5" strokeLinecap="round">
                   <animate attributeName="stroke-dasharray" values="0,15;15,0" dur="4s" repeatCount="indefinite"/>
                 </line>
                 
-                {/* Good synergies - medium lines */}
-                <line x1="80" y1="160" x2="300" y2="60" stroke="url(#mediumGradient)" strokeWidth="4" strokeLinecap="round" strokeDasharray="8,4">
+                {/* CTV (300,60) to Meta (520,80) - Good synergy */}
+                <line x1="300" y1="60" x2="520" y2="80" stroke="url(#mediumGradient)" strokeWidth="4" strokeLinecap="round" strokeDasharray="8,4">
                   <animate attributeName="stroke-dashoffset" values="0;12" dur="2s" repeatCount="indefinite"/>
                 </line>
-                <line x1="320" y1="80" x2="360" y2="160" stroke="url(#mediumGradient)" strokeWidth="4" strokeLinecap="round" strokeDasharray="8,4">
+                
+                {/* Google (80,160) to TikTok (560,160) - Good synergy */}
+                <line x1="80" y1="160" x2="560" y2="160" stroke="url(#mediumGradient)" strokeWidth="4" strokeLinecap="round" strokeDasharray="8,4">
                   <animate attributeName="stroke-dashoffset" values="0;12" dur="2.5s" repeatCount="indefinite"/>
                 </line>
                 
-                {/* Moderate synergies - thinner dotted lines */}
-                <line x1="100" y1="80" x2="160" y2="240" stroke="url(#moderateGradient)" strokeWidth="3" strokeLinecap="round" strokeDasharray="4,8" opacity="0.7"/>
-                <line x1="300" y1="60" x2="360" y2="240" stroke="url(#moderateGradient)" strokeWidth="3" strokeLinecap="round" strokeDasharray="4,8" opacity="0.7"/>
-                <line x1="160" y1="240" x2="360" y2="240" stroke="url(#moderateGradient)" strokeWidth="2" strokeLinecap="round" strokeDasharray="6,6" opacity="0.6"/>
+                {/* TV (80,80) to Amazon (160,240) - Moderate synergy */}
+                <line x1="80" y1="80" x2="160" y2="240" stroke="url(#moderateGradient)" strokeWidth="3" strokeLinecap="round" strokeDasharray="4,8" opacity="0.7"/>
+                
+                {/* Meta (520,80) to Promo (440,240) - Moderate synergy */}
+                <line x1="520" y1="80" x2="440" y2="240" stroke="url(#moderateGradient)" strokeWidth="3" strokeLinecap="round" strokeDasharray="4,8" opacity="0.7"/>
+                
+                {/* Amazon (160,240) to Promo (440,240) - Moderate synergy */}
+                <line x1="160" y1="240" x2="440" y2="240" stroke="url(#moderateGradient)" strokeWidth="2" strokeLinecap="round" strokeDasharray="6,6" opacity="0.6"/>
+                
+                {/* TikTok (560,160) to Meta (520,80) - Cross synergy */}
+                <line x1="560" y1="160" x2="520" y2="80" stroke="url(#moderateGradient)" strokeWidth="3" strokeLinecap="round" strokeDasharray="5,5" opacity="0.5"/>
               </svg>
             </div>
           </div>
