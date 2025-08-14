@@ -122,7 +122,7 @@ export default function ChatBubble({ getContext }: ChatBubbleProps) {
         {/* Messages Container - Only show if there are messages and showMessages is true */}
         {messages.length > 0 && showMessages && (
           <div className="max-w-4xl mx-auto px-6 pb-4">
-            <div className="bg-white/95 backdrop-blur-lg rounded-t-2xl border border-black/10 shadow-2xl max-h-[60vh] overflow-hidden">
+            <div className="bg-white/80 backdrop-blur-xl rounded-t-2xl border border-white/30 shadow-2xl max-h-[60vh] overflow-hidden backdrop-saturate-150">
               <div className="p-4 border-b border-black/10 bg-[#2d2d2d] text-white rounded-t-2xl">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
@@ -147,10 +147,10 @@ export default function ChatBubble({ getContext }: ChatBubbleProps) {
                 {messages.map((m, i) => (
                   <div key={i} className={clsx("flex", m.role === "user" ? "justify-end" : "justify-start")}>
                     <div className={clsx(
-                      "max-w-[85%] rounded-2xl px-4 py-3 text-sm shadow-sm",
+                      "max-w-[85%] rounded-2xl px-4 py-3 text-sm shadow-lg backdrop-blur-md",
                       m.role === "user" 
-                        ? "bg-[#2d2d2d] text-white rounded-br-md" 
-                        : "bg-gray-50 text-black/90 rounded-bl-md border border-black/5"
+                        ? "bg-[#2d2d2d]/90 text-white rounded-br-md backdrop-saturate-150" 
+                        : "bg-white/70 text-black/90 rounded-bl-md border border-white/50 backdrop-saturate-150"
                     )}>
                       {m.role === "user" ? (
                         <div className="leading-relaxed">{m.content}</div>
@@ -163,7 +163,7 @@ export default function ChatBubble({ getContext }: ChatBubbleProps) {
                 
                 {isTyping && (
                   <div className="flex justify-start">
-                    <div className="max-w-[85%] rounded-2xl px-4 py-3 bg-gray-50 text-sm rounded-bl-md border border-black/5 shadow-sm">
+                    <div className="max-w-[85%] rounded-2xl px-4 py-3 bg-white/70 text-sm rounded-bl-md border border-white/50 shadow-lg backdrop-blur-md backdrop-saturate-150">
                       <div className="flex items-center gap-3">
                         <span className="text-xs text-black/60">Mochi is thinking</span>
                         <div className="flex gap-1">
@@ -186,7 +186,7 @@ export default function ChatBubble({ getContext }: ChatBubbleProps) {
         <div className="max-w-4xl mx-auto px-6 pb-16">
           <div className="relative">
             {/* Input Container */}
-            <div className="relative bg-white rounded-full shadow-2xl border border-black/10 flex items-center p-2">
+            <div className="relative bg-white/90 backdrop-blur-xl backdrop-saturate-150 rounded-full shadow-2xl border border-white/30 flex items-center p-2">
               <input
                 ref={inputRef}
                 value={input}
