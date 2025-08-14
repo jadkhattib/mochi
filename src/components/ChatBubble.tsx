@@ -143,7 +143,7 @@ export default function ChatBubble({ getContext }: ChatBubbleProps) {
           }}
         >
           <div className="flex flex-col items-center">
-            <span className="text-lg font-medium">Mochi</span>
+            <span className="text-lg font-medium">Ask</span>
           </div>
         </button>
       </div>
