@@ -12,7 +12,7 @@ import {
   toCreativeFormatByPublisher,
   sampleData
 } from "@/lib/transform";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ScatterChart, Scatter, BarChart, Bar, Cell, PieChart, Pie, ComposedChart, Area } from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ScatterChart, Scatter, BarChart, Bar, Cell, ComposedChart, Area } from "recharts";
 
 export default function PublishersPage() {
   const [data, setData] = useState<ApiDataResponse | null>(null);
@@ -323,35 +323,57 @@ export default function PublishersPage() {
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
         <div className="rounded-xl bg-white border border-black/10 p-4">
           <h3 className="font-medium mb-4">Current Market Share Distribution</h3>
-          <ResponsiveContainer width="100%" height={350}>
-            <PieChart>
-              <Pie
-                data={marketShareGrowth}
-                cx="50%"
-                cy="50%"
-                outerRadius={120}
-                fill="#8884d8"
-                dataKey="currentShare"
-                label={({ publisher, currentShare }) => `${publisher}: ${currentShare.toFixed(1)}%`}
-              >
-                {marketShareGrowth.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={publisherColors[entry.publisher] || colors[index % colors.length]} />
-                ))}
-              </Pie>
-              <Tooltip 
-                contentStyle={{ 
-                  backgroundColor: 'white', 
-                  border: '1px solid #e0e0e0', 
-                  borderRadius: '8px',
-                  fontSize: '12px'
-                }}
-                formatter={(value, name) => [
-                  typeof value === 'number' ? value.toFixed(1) + '%' : value, 
-                  'Market Share'
-                ]}
-              />
-            </PieChart>
-          </ResponsiveContainer>
+          <div className="space-y-4">
+            {marketShareGrowth
+              .sort((a, b) => b.currentShare - a.currentShare)
+              .map((publisher, idx) => (
+              <div key={idx} className="flex items-center justify-between p-3 border border-black/10 rounded-lg">
+                <div className="flex items-center gap-3">
+                  <div 
+                    className="w-4 h-4 rounded-full" 
+                    style={{ backgroundColor: publisherColors[publisher.publisher] || colors[idx % colors.length] }}
+                  ></div>
+                  <span className="font-medium text-sm">{publisher.publisher}</span>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="text-right">
+                    <div className="text-lg font-bold">{publisher.currentShare.toFixed(1)}%</div>
+                    <div className="text-xs text-black/60">Market Share</div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-sm text-black/70">{publisher.previousShare.toFixed(1)}%</div>
+                    <div className="text-xs text-black/60">Previous</div>
+                  </div>
+                  <span className={`px-2 py-1 rounded-full text-xs ${
+                    publisher.currentShare > 25 ? "bg-green-100 text-green-800" :
+                    publisher.currentShare > 15 ? "bg-blue-100 text-blue-800" :
+                    publisher.currentShare > 10 ? "bg-yellow-100 text-yellow-800" :
+                    "bg-gray-100 text-gray-800"
+                  }`}>
+                    {publisher.currentShare > 25 ? 'Leader' :
+                     publisher.currentShare > 15 ? 'Major' :
+                     publisher.currentShare > 10 ? 'Mid-tier' : 'Niche'}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          {/* Summary Statistics */}
+          <div className="mt-4 p-3 bg-gradient-to-r from-gray-50 to-blue-50 rounded-lg">
+            <h4 className="text-xs font-medium text-black/80 mb-2">Market Concentration</h4>
+            <div className="text-xs text-black/60 space-y-1">
+              <div>• <strong>Top 3 Publishers:</strong> {marketShareGrowth
+                .sort((a, b) => b.currentShare - a.currentShare)
+                .slice(0, 3)
+                .reduce((sum, p) => sum + p.currentShare, 0)
+                .toFixed(1)}% of total market</div>
+              <div>• <strong>Market Leader:</strong> {marketShareGrowth
+                .sort((a, b) => b.currentShare - a.currentShare)[0]?.publisher} dominates with {marketShareGrowth
+                .sort((a, b) => b.currentShare - a.currentShare)[0]?.currentShare.toFixed(1)}%</div>
+              <div>• <strong>Competition:</strong> {marketShareGrowth.length} active publishers in portfolio</div>
+            </div>
+          </div>
         </div>
 
         <div className="rounded-xl bg-white border border-black/10 p-4">
