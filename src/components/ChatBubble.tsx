@@ -31,6 +31,7 @@ interface ChatBubbleProps {
 
 export default function ChatBubble({ getContext }: ChatBubbleProps) {
   const [open, setOpen] = useState(false);
+  const [showMessages, setShowMessages] = useState(false);
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Array<{ role: "user" | "assistant"; content: string }>>([]);
   const [isTyping, setIsTyping] = useState(false);
@@ -42,7 +43,7 @@ export default function ChatBubble({ getContext }: ChatBubbleProps) {
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") {
-        setOpen(false);
+        setShowMessages(false);
       }
     }
     document.addEventListener("keydown", onKey);
@@ -69,6 +70,7 @@ export default function ChatBubble({ getContext }: ChatBubbleProps) {
     setInput("");
     const nextMessages = [...messages, { role: "user" as const, content: text }];
     setMessages(nextMessages);
+    setShowMessages(true); // Show messages when sending
     setIsTyping(true);
     
     try {
@@ -93,7 +95,10 @@ export default function ChatBubble({ getContext }: ChatBubbleProps) {
       <button
         title="Ask Mochi AI"
         className="fixed bottom-6 right-6 z-50 rounded-full shadow-lg border border-black/10 bg-[#2d2d2d] text-white w-16 h-16 flex items-center justify-center hover:opacity-90 focus:outline-none transition-all hover:scale-105"
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          setOpen(true);
+          setShowMessages(true);
+        }}
       >
         <div className="flex flex-col items-center">
           <span className="text-xs font-medium">AI</span>
@@ -102,10 +107,10 @@ export default function ChatBubble({ getContext }: ChatBubbleProps) {
       </button>
 
       {/* Overlay */}
-      {open && (
+      {showMessages && (
         <div 
           className="fixed inset-0 bg-black/20 z-40 transition-all duration-300"
-          onClick={() => setOpen(false)}
+          onClick={() => setShowMessages(false)}
         />
       )}
 
@@ -116,8 +121,8 @@ export default function ChatBubble({ getContext }: ChatBubbleProps) {
           open ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
         )}
       >
-        {/* Messages Container - Only show if there are messages */}
-        {messages.length > 0 && (
+        {/* Messages Container - Only show if there are messages and showMessages is true */}
+        {messages.length > 0 && showMessages && (
           <div className="max-w-4xl mx-auto px-6 pb-4">
             <div className="bg-white/95 backdrop-blur-lg rounded-t-2xl border border-black/10 shadow-2xl max-h-[60vh] overflow-hidden">
               <div className="p-4 border-b border-black/10 bg-[#2d2d2d] text-white rounded-t-2xl">
@@ -132,7 +137,7 @@ export default function ChatBubble({ getContext }: ChatBubbleProps) {
                     </div>
                   </div>
                   <button 
-                    onClick={() => setOpen(false)} 
+                    onClick={() => setShowMessages(false)} 
                     className="text-white/80 hover:text-white w-8 h-8 rounded-full hover:bg-white/10 flex items-center justify-center transition-colors"
                   >
                     ✕
@@ -180,7 +185,7 @@ export default function ChatBubble({ getContext }: ChatBubbleProps) {
         )}
 
         {/* Input Section */}
-        <div className="max-w-4xl mx-auto px-6 pb-8">
+        <div className="max-w-4xl mx-auto px-6 pb-16">
           <div className="relative">
             {/* Input Container */}
             <div className="relative bg-white rounded-full shadow-2xl border border-black/10 flex items-center p-2">
@@ -222,14 +227,7 @@ export default function ChatBubble({ getContext }: ChatBubbleProps) {
             </div>
           </div>
 
-          {/* Hint text - only show when no messages */}
-          {messages.length === 0 && (
-            <div className="text-center mt-4">
-              <p className="text-sm text-white/80 bg-black/20 rounded-full px-4 py-2 inline-block">
-                Ask about ROI trends, channel performance, seasonal insights, or any data on screen
-              </p>
-            </div>
-          )}
+
         </div>
       </div>
     </>
