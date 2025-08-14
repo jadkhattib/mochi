@@ -114,7 +114,7 @@ export default function ChatBubble({ getContext }: ChatBubbleProps) {
   return (
     <>
       {/* Glassy AI Button with Glow */}
-      <div className="fixed bottom-6 right-6 z-50">
+      <div className="fixed bottom-12 right-15 z-50">
         {/* Glowing Effect - Only show when chat is closed */}
         {!open && (
           <>
@@ -129,7 +129,12 @@ export default function ChatBubble({ getContext }: ChatBubbleProps) {
         
         <button
           title="Ask Mochi AI"
-          className="relative bg-white/15 backdrop-blur-2xl backdrop-saturate-200 text-black/80 w-20 h-20 rounded-full border border-purple-400/60 shadow-2xl shadow-purple-400/20 flex items-center justify-center hover:bg-white/25 hover:text-black/90 hover:border-purple-500/70 focus:outline-none transition-all hover:scale-105 duration-300"
+          className="relative bg-white/15 text-black w-20 h-20 rounded-full border border-purple-400/60 shadow-2xl shadow-purple-400/20 flex items-center justify-center hover:bg-white/25 hover:text-black hover:border-purple-500/70 focus:outline-none transition-all hover:scale-105 duration-300"
+          style={{
+            boxShadow: '0 0 8px rgba(147, 51, 234, 0.15), 0 0 16px rgba(147, 51, 234, 0.1), 0 0 24px rgba(147, 51, 234, 0.05)',
+            animation: 'purplePulse 3s ease-in-out infinite',
+            filter: 'none'
+          }}
           onClick={() => {
             if (!open) {
               setOpen(true);
