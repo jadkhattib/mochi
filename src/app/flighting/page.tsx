@@ -76,7 +76,7 @@ export default function FlightingPage() {
             <h4 className="font-medium mb-2">Optimal Patterns</h4>
             <ul className="space-y-1 text-black/70">
               <li>• Best pattern: <strong>{flightScenarioROI.reduce((max, f) => f.roi > max.roi ? f : max, flightScenarioROI[0])?.scenario || "Pulsing"}</strong></li>
-              <li>• Current saturation: {saturationData.length > 10 ? `${saturationData[10]?.saturation.toFixed(1)}%` : "N/A"}</li>
+              <li>• Current saturation: {saturationData.length > 10 ? `${saturationData[10]?.saturation?.toFixed(1)}%` : "N/A"}</li>
               <li>• Optimize spend timing for maximum efficiency</li>
             </ul>
           </div>
@@ -270,6 +270,33 @@ export default function FlightingPage() {
       {/* Strategic Flighting Recommendations */}
       <div className="rounded-xl bg-gradient-to-r from-[#f3f2ef] to-white border border-black/10 p-4">
         <h3 className="font-medium mb-3">Strategic Flighting Recommendations</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+          <div>
+            <h4 className="font-medium mb-2">Optimal Patterns</h4>
+            <ul className="space-y-1 text-black/70">
+              <li>• Best pattern: <strong>{flightScenarioROI.reduce((max, f) => f.roi > max.roi ? f : max, flightScenarioROI[0])?.scenario || "Pulsing"}</strong></li>
+              <li>• Current saturation: {saturationData.length > 10 ? `${saturationData[10]?.saturation?.toFixed(1)}%` : "N/A"}</li>
+              <li>• Optimize spend timing for maximum efficiency</li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-medium mb-2">Budget Optimization</h4>
+            <ul className="space-y-1 text-black/70">
+              <li>• Focus on {budgetScenarios.reduce((max, b) => b.roi > max.roi ? b : max, budgetScenarios[0])?.scenario || "high impact"} periods</li>
+              <li>• Balance reach vs frequency based on objectives</li>
+              <li>• Monitor competitive activity for timing adjustments</li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-medium mb-2">Timing Strategy</h4>
+            <ul className="space-y-1 text-black/70">
+              <li>• Coordinate flights across channels for synergy</li>
+              <li>• Leverage seasonal peaks for maximum impact</li>
+              <li>• Test different flight durations for optimal ROI</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

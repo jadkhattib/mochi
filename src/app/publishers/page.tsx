@@ -65,9 +65,9 @@ export default function PublishersPage() {
           <div>
             <h4 className="font-medium mb-2">Performance Leaders</h4>
             <ul className="space-y-1 text-black/70">
-              <li>• Top ROI: <strong>{topPublisher?.publisher || "Meta"}</strong> ({topPublisher?.avgROI.toFixed(2) || "5.2"} ROI)</li>
+              <li>• Top ROI: <strong>{topPublisher?.publisher || "Meta"}</strong> ({topPublisher?.avgROI?.toFixed(2) || "5.2"} ROI)</li>
               <li>• Scale efficiently with {topPublisher?.publisher || "leading performers"} for core volume</li>
-              <li>• Fastest growing: <strong>{fastestGrowing?.publisher || "TikTok"}</strong> (+{fastestGrowing?.growth.toFixed(0) || "28"}% growth)</li>
+              <li>• Fastest growing: <strong>{fastestGrowing?.publisher || "TikTok"}</strong> (+{fastestGrowing?.growth?.toFixed(0) || "28"}% growth)</li>
             </ul>
           </div>
           <div>
@@ -94,7 +94,7 @@ export default function PublishersPage() {
         <div className="rounded-xl bg-white border border-black/10 p-4">
           <h3 className="font-medium text-sm mb-2">Top Publisher</h3>
           <p className="text-2xl font-bold text-[#2d2d2d]">{topPublisher?.publisher || "N/A"}</p>
-          <p className="text-xs text-black/60 mt-1">ROI: {topPublisher?.avgROI.toFixed(2) || "0.00"}</p>
+          <p className="text-xs text-black/60 mt-1">ROI: {topPublisher?.avgROI?.toFixed(2) || "0.00"}</p>
         </div>
         <div className="rounded-xl bg-white border border-black/10 p-4">
           <h3 className="font-medium text-sm mb-2">Fastest Growing</h3>
@@ -429,6 +429,32 @@ export default function PublishersPage() {
       <div className="rounded-xl bg-gradient-to-r from-[#f3f2ef] to-white border border-black/10 p-4">
         <h3 className="font-medium mb-3">Strategic Publisher Recommendations</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+          <div>
+            <h4 className="font-medium mb-2">Performance Leaders</h4>
+            <ul className="space-y-1 text-black/70">
+              <li>• Top ROI: <strong>{topPublisher?.publisher || "Meta"}</strong> ({topPublisher?.avgROI?.toFixed(2) || "5.2"} ROI)</li>
+              <li>• Scale efficiently with {topPublisher?.publisher || "leading performers"} for core volume</li>
+              <li>• Fastest growing: <strong>{fastestGrowing?.publisher || "TikTok"}</strong> (+{fastestGrowing?.growth?.toFixed(0) || "28"}% growth)</li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-medium mb-2">Portfolio Strategy</h4>
+            <ul className="space-y-1 text-black/70">
+              <li>• Diversify across {publisherROIScale.length} publishers to reduce risk</li>
+              <li>• Focus 60% budget on top 3 performers for stability</li>
+              <li>• Test emerging platforms with 10-15% budget allocation</li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-medium mb-2">Cross-Country Insights</h4>
+            <ul className="space-y-1 text-black/70">
+              <li>• Leverage winning tactics across similar markets</li>
+              <li>• Adapt creative formats to local publisher preferences</li>
+              <li>• Monitor competitive shifts for reallocation opportunities</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

@@ -191,7 +191,7 @@ export default function OptimizePage() {
           <div>
             <h4 className="font-medium mb-2">Portfolio Strategy</h4>
             <ul className="space-y-1 text-black/70">
-              <li>• Best allocation: <strong>{bestScenario?.scenario || "Current + 20%"}</strong> ({bestScenario?.roi.toFixed(2) || "5.8"} ROI)</li>
+              <li>• Best allocation: <strong>{bestScenario?.scenario || "Current + 20%"}</strong> ({bestScenario?.roi?.toFixed(2) || "5.8"} ROI)</li>
               <li>• Focus on {optimizationGoal === "ROI" ? "efficiency" : "reach"} optimization</li>
               <li>• {riskTolerance === "Conservative" ? "Gradual" : "Aggressive"} reallocation strategy</li>
             </ul>
@@ -469,6 +469,33 @@ export default function OptimizePage() {
       {/* Strategic Optimization Recommendations */}
       <div className="rounded-xl bg-gradient-to-r from-[#f3f2ef] to-white border border-black/10 p-4">
         <h3 className="font-medium mb-3">Strategic Optimization Recommendations</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+          <div>
+            <h4 className="font-medium mb-2">Portfolio Strategy</h4>
+            <ul className="space-y-1 text-black/70">
+              <li>• Best allocation: <strong>{bestScenario?.scenario || "Current + 20%"}</strong> ({bestScenario?.roi?.toFixed(2) || "5.8"} ROI)</li>
+              <li>• Focus on {optimizationGoal === "ROI" ? "efficiency" : "reach"} optimization</li>
+              <li>• {riskTolerance === "Conservative" ? "Gradual" : "Aggressive"} reallocation strategy</li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-medium mb-2">Channel Mix</h4>
+            <ul className="space-y-1 text-black/70">
+              <li>• Diversify across {optimizedAllocation.length} high-performing channels</li>
+              <li>• Monitor saturation levels for timing adjustments</li>
+              <li>• Balance reach vs frequency based on objectives</li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-medium mb-2">Implementation</h4>
+            <ul className="space-y-1 text-black/70">
+              <li>• Test budget shifts gradually for validation</li>
+              <li>• Monitor competitive activity for opportunities</li>
+              <li>• Regular optimization based on performance data</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

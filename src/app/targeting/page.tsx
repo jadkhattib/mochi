@@ -64,7 +64,7 @@ export default function TargetingPage() {
           <div>
             <h4 className="font-medium mb-2">Audience Strategy</h4>
             <ul className="space-y-1 text-black/70">
-              <li>• Best targeting: <strong>{bestTargeting?.targeting || "1st Party"}</strong> ({bestTargeting?.avgROI.toFixed(2) || "6.2"} ROI)</li>
+              <li>• Best targeting: <strong>{bestTargeting?.targeting || "1st Party"}</strong> ({bestTargeting?.avgROI?.toFixed(2) || "6.2"} ROI)</li>
               <li>• Focus funnel investment on {topStage?.stage || "Awareness"} stage</li>
               <li>• Leverage 1st party data for {bestTargeting?.avgROI > 5 ? "scaling" : "testing"}</li>
             </ul>
@@ -93,11 +93,11 @@ export default function TargetingPage() {
         <div className="rounded-xl bg-white border border-black/10 p-4">
           <h3 className="font-medium text-sm mb-2">Top Targeting</h3>
           <p className="text-2xl font-bold text-[#2d2d2d]">{topTargeting?.targeting || "N/A"}</p>
-          <p className="text-xs text-black/60 mt-1">ROI: {topTargeting?.roi.toFixed(2) || "0.00"}</p>
+          <p className="text-xs text-black/60 mt-1">ROI: {topTargeting?.roi?.toFixed(2) || "0.00"}</p>
         </div>
         <div className="rounded-xl bg-white border border-black/10 p-4">
           <h3 className="font-medium text-sm mb-2">Best vs BAU Lift</h3>
-          <p className="text-2xl font-bold text-[#2d2d2d]">+{bestLift?.vsBAULift.toFixed(1) || "0.0"}%</p>
+          <p className="text-2xl font-bold text-[#2d2d2d]">+{bestLift?.vsBAULift?.toFixed(1) || "0.0"}%</p>
           <p className="text-xs text-black/60 mt-1">{bestLift?.targeting || "N/A"}</p>
         </div>
         <div className="rounded-xl bg-white border border-black/10 p-4">
@@ -420,12 +420,13 @@ export default function TargetingPage() {
           <div>
             <h4 className="font-medium mb-2">High-Performance Targeting</h4>
             <ul className="space-y-1 text-black/70">
-              <li>• Top performer: <strong>{topTargeting?.targeting || "1st Party Data"}</strong> ({topTargeting?.roi.toFixed(2) || "6.8"} ROI)</li>
-              <li>• Best lift vs BAU: <strong>{bestLift?.targeting || "CDP"}</strong> (+{bestLift?.vsBAULift.toFixed(1) || "42.3"}%)</li>
+              <li>• Top performer: <strong>{topTargeting?.targeting || "1st Party Data"}</strong> ({topTargeting?.roi?.toFixed(2) || "6.8"} ROI)</li>
+              <li>• Best lift vs BAU: <strong>{bestLift?.targeting || "CDP"}</strong> (+{bestLift?.vsBAULift?.toFixed(1) || "42.3"}%)</li>
               <li>• 1st party data shows {firstPartyROI.toFixed(1)}x better performance</li>
             </ul>
           </div>
-          <div>
+        </div>
+      </div>
     </div>
   );
 }
