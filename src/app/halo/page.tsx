@@ -91,7 +91,7 @@ export default function HaloSynergyPage() {
           
           {/* Top Synergy Pairs - Visual Cards */}
           <div className="mb-4">
-            <h4 className="text-sm font-medium text-black/80 mb-3">🔥 Strongest Synergy Pairs</h4>
+            <h4 className="text-sm font-medium text-black/80 mb-3">Strongest Synergy Pairs</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {synergyMatrix.slice(0, 4).map((synergy, idx) => {
                 const liftColor = synergy.liftPercent > 25 ? "from-green-500 to-emerald-600" :
@@ -134,104 +134,9 @@ export default function HaloSynergyPage() {
             </div>
           </div>
           
-          {/* Synergy Heatmap Grid */}
-          <div className="mb-4">
-            <h4 className="text-sm font-medium text-black/80 mb-3">📊 All Channel Combinations</h4>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-              {synergyMatrix.slice(0, 12).map((synergy, idx) => {
-                const intensity = synergy.liftPercent;
-                const bgColor = intensity > 25 ? "bg-green-100 border-green-300" :
-                               intensity > 15 ? "bg-blue-100 border-blue-300" :
-                               intensity > 8 ? "bg-yellow-100 border-yellow-300" :
-                               "bg-gray-100 border-gray-300";
-                const textColor = intensity > 25 ? "text-green-800" :
-                                 intensity > 15 ? "text-blue-800" :
-                                 intensity > 8 ? "text-yellow-800" :
-                                 "text-gray-700";
-                
-                return (
-                  <div key={idx} className={`p-2 border rounded-lg ${bgColor} hover:shadow-md transition-shadow cursor-pointer`}>
-                    <div className="text-center">
-                      <div className="text-xs font-medium text-black/80 mb-1">
-                        {synergy.channel1.slice(0, 4)} + {synergy.channel2.slice(0, 4)}
-                      </div>
-                      <div className={`text-sm font-bold ${textColor}`}>
-                        +{synergy.liftPercent.toFixed(0)}%
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-          
-          {/* Channel Network Visualization */}
-          <div className="mb-4">
-            <h4 className="text-sm font-medium text-black/80 mb-3">🔗 Channel Network Strength</h4>
-            <div className="relative bg-gradient-to-br from-gray-50 to-blue-50 rounded-lg p-4" style={{ height: '200px' }}>
-              {/* Center nodes representing major channels */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="relative w-full h-full max-w-md max-h-48">
-                  {/* TV Cluster */}
-                  <div className="absolute top-4 left-8 flex flex-col items-center">
-                    <div className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-lg">TV</div>
-                    <div className="mt-1 text-xs text-center text-black/70">Linear<br/>CTV</div>
-                  </div>
-                  
-                  {/* Digital Cluster */}
-                  <div className="absolute top-4 right-8 flex flex-col items-center">
-                    <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-lg">DIG</div>
-                    <div className="mt-1 text-xs text-center text-black/70">Meta<br/>Google</div>
-                  </div>
-                  
-                  {/* Social Cluster */}
-                  <div className="absolute bottom-8 left-12 flex flex-col items-center">
-                    <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-lg">SOC</div>
-                    <div className="mt-1 text-xs text-center text-black/70">TikTok<br/>Meta</div>
-                  </div>
-                  
-                  {/* Retail Cluster */}
-                  <div className="absolute bottom-8 right-12 flex flex-col items-center">
-                    <div className="w-12 h-12 bg-orange-600 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-lg">RET</div>
-                    <div className="mt-1 text-xs text-center text-black/70">Amazon<br/>Promo</div>
-                  </div>
-                  
-                  {/* Connection lines showing synergy strength */}
-                  <svg className="absolute inset-0 w-full h-full pointer-events-none">
-                    {/* Strong connections */}
-                    <line x1="80" y1="40" x2="240" y2="40" stroke="#2d2d2d" strokeWidth="4" opacity="0.7" />
-                    <line x1="80" y1="40" x2="80" y2="140" stroke="#8884d8" strokeWidth="3" opacity="0.6" />
-                    <line x1="240" y1="40" x2="240" y2="140" stroke="#82ca9d" strokeWidth="3" opacity="0.6" />
-                    <line x1="80" y1="140" x2="240" y2="140" stroke="#ffc658" strokeWidth="2" opacity="0.5" />
-                    
-                    {/* Cross connections */}
-                    <line x1="80" y1="40" x2="240" y2="140" stroke="#ff7300" strokeWidth="2" opacity="0.4" strokeDasharray="5,5" />
-                    <line x1="240" y1="40" x2="80" y2="140" stroke="#d084d0" strokeWidth="2" opacity="0.4" strokeDasharray="5,5" />
-                  </svg>
-                </div>
-              </div>
-            </div>
-            
-            {/* Legend */}
-            <div className="mt-2 flex flex-wrap gap-4 text-xs">
-              <div className="flex items-center gap-1">
-                <div className="w-3 h-1 bg-gray-800"></div>
-                <span>Strong Synergy (25%+)</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <div className="w-3 h-1 bg-blue-600"></div>
-                <span>Good Synergy (15-25%)</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <div className="w-3 h-1 bg-gray-400 opacity-60" style={{strokeDasharray: "2,2"}}></div>
-                <span>Moderate Synergy (8-15%)</span>
-              </div>
-            </div>
-          </div>
-          
           {/* Key Insights */}
           <div className="p-3 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg">
-            <h4 className="text-xs font-medium text-blue-800 mb-2">💡 Synergy Insights</h4>
+            <h4 className="text-xs font-medium text-blue-800 mb-2">Synergy Insights</h4>
             <div className="text-xs text-blue-600 space-y-1">
               <div>• <strong>Best Pair:</strong> {synergyMatrix[0]?.channel1 || 'TV'} + {synergyMatrix[0]?.channel2 || 'Digital'} delivers +{synergyMatrix[0]?.liftPercent.toFixed(0) || '28'}% lift</div>
               <div>• <strong>High Synergy Count:</strong> {synergyMatrix.filter(s => s.liftPercent > 15).length} pairs exceed 15% lift threshold</div>
@@ -275,6 +180,104 @@ export default function HaloSynergyPage() {
               />
             </ScatterChart>
           </ResponsiveContainer>
+        </div>
+      </div>
+
+      {/* All Channel Combinations - Horizontal Section */}
+      <div className="rounded-xl bg-white border border-black/10 p-4">
+        <h3 className="font-medium mb-4">All Channel Combinations</h3>
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3">
+          {synergyMatrix.slice(0, 16).map((synergy, idx) => {
+            const intensity = synergy.liftPercent;
+            const bgColor = intensity > 25 ? "bg-green-100 border-green-300" :
+                           intensity > 15 ? "bg-blue-100 border-blue-300" :
+                           intensity > 8 ? "bg-yellow-100 border-yellow-300" :
+                           "bg-gray-100 border-gray-300";
+            const textColor = intensity > 25 ? "text-green-800" :
+                             intensity > 15 ? "text-blue-800" :
+                             intensity > 8 ? "text-yellow-800" :
+                             "text-gray-700";
+            
+            return (
+              <div key={idx} className={`p-3 border rounded-lg ${bgColor} hover:shadow-md transition-shadow cursor-pointer`}>
+                <div className="text-center">
+                  <div className="text-xs font-medium text-black/80 mb-1">
+                    {synergy.channel1.slice(0, 4)} + {synergy.channel2.slice(0, 4)}
+                  </div>
+                  <div className={`text-sm font-bold ${textColor}`}>
+                    +{synergy.liftPercent.toFixed(0)}%
+                  </div>
+                  <div className="text-xs text-black/60 mt-1">
+                    {synergy.synergyScore.toFixed(2)}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Channel Network Strength - Horizontal Section */}
+      <div className="rounded-xl bg-white border border-black/10 p-4">
+        <h3 className="font-medium mb-4">Channel Network Strength</h3>
+        <div className="relative bg-gradient-to-br from-gray-50 to-blue-50 rounded-lg p-6" style={{ height: '250px' }}>
+          {/* Center nodes representing major channels */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="relative w-full h-full max-w-4xl max-h-60">
+              {/* TV Cluster */}
+              <div className="absolute top-6 left-12 flex flex-col items-center">
+                <div className="w-14 h-14 bg-gray-800 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-lg">TV</div>
+                <div className="mt-2 text-xs text-center text-black/70">Linear<br/>CTV</div>
+              </div>
+              
+              {/* Digital Cluster */}
+              <div className="absolute top-6 right-12 flex flex-col items-center">
+                <div className="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-lg">DIG</div>
+                <div className="mt-2 text-xs text-center text-black/70">Meta<br/>Google</div>
+              </div>
+              
+              {/* Social Cluster */}
+              <div className="absolute bottom-6 left-24 flex flex-col items-center">
+                <div className="w-14 h-14 bg-purple-600 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-lg">SOC</div>
+                <div className="mt-2 text-xs text-center text-black/70">TikTok<br/>Meta</div>
+              </div>
+              
+              {/* Retail Cluster */}
+              <div className="absolute bottom-6 right-24 flex flex-col items-center">
+                <div className="w-14 h-14 bg-orange-600 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-lg">RET</div>
+                <div className="mt-2 text-xs text-center text-black/70">Amazon<br/>Promo</div>
+              </div>
+              
+              {/* Connection lines showing synergy strength */}
+              <svg className="absolute inset-0 w-full h-full pointer-events-none">
+                {/* Strong connections */}
+                <line x1="100" y1="50" x2="320" y2="50" stroke="#2d2d2d" strokeWidth="5" opacity="0.7" />
+                <line x1="100" y1="50" x2="120" y2="170" stroke="#8884d8" strokeWidth="4" opacity="0.6" />
+                <line x1="320" y1="50" x2="300" y2="170" stroke="#82ca9d" strokeWidth="4" opacity="0.6" />
+                <line x1="120" y1="170" x2="300" y2="170" stroke="#ffc658" strokeWidth="3" opacity="0.5" />
+                
+                {/* Cross connections */}
+                <line x1="100" y1="50" x2="300" y2="170" stroke="#ff7300" strokeWidth="3" opacity="0.4" strokeDasharray="8,8" />
+                <line x1="320" y1="50" x2="120" y2="170" stroke="#d084d0" strokeWidth="3" opacity="0.4" strokeDasharray="8,8" />
+              </svg>
+            </div>
+          </div>
+        </div>
+        
+        {/* Legend */}
+        <div className="mt-4 flex flex-wrap justify-center gap-6 text-xs">
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-1 bg-gray-800"></div>
+            <span>Strong Synergy (25%+)</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-1 bg-blue-600"></div>
+            <span>Good Synergy (15-25%)</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-1 bg-gray-400 opacity-60" style={{borderTop: "1px dashed #666"}}></div>
+            <span>Moderate Synergy (8-15%)</span>
+          </div>
         </div>
       </div>
 
