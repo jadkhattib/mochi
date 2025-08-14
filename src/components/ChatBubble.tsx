@@ -118,8 +118,12 @@ export default function ChatBubble({ getContext }: ChatBubbleProps) {
         title="Ask Mochi AI"
         className="fixed bottom-6 right-6 z-50 rounded-full shadow-lg border border-black/10 bg-[#2d2d2d] text-white w-16 h-16 flex items-center justify-center hover:opacity-90 focus:outline-none transition-all hover:scale-105"
         onClick={() => {
-          setOpen(true);
-          setShowMessages(false);
+          if (!open) {
+            setOpen(true);
+            setShowMessages(false);
+          } else {
+            setShowMessages(true);
+          }
         }}
       >
         <div className="flex flex-col items-center">
@@ -137,54 +141,57 @@ export default function ChatBubble({ getContext }: ChatBubbleProps) {
           open ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
         )}
       >
-        {/* Floating Messages - Only show if there are messages and showMessages is true */}
+        {/* Unified Chat Container - Only show if there are messages and showMessages is true */}
         {messages.length > 0 && showMessages && (
           <div className="max-w-4xl mx-auto px-6 pb-4">
-            {/* Floating Close Button */}
-            <div className="flex justify-end mb-4">
-              <button 
-                onClick={() => setShowMessages(false)} 
-                className="bg-black/20 backdrop-blur-md text-white/80 hover:text-white w-10 h-10 rounded-full hover:bg-black/30 flex items-center justify-center transition-all shadow-lg backdrop-saturate-150"
-              >
-                ✕
-              </button>
-            </div>
-            
-            {/* Floating Messages */}
-            <div className="space-y-4 overflow-y-auto max-h-[50vh] pb-4">
-              {messages.map((m, i) => (
-                <div key={i} className={clsx("flex", m.role === "user" ? "justify-end" : "justify-start")}>
-                  <div className={clsx(
-                    "max-w-[85%] rounded-2xl px-4 py-3 text-sm shadow-2xl backdrop-blur-xl backdrop-saturate-200 border",
-                    m.role === "user" 
-                      ? "bg-black/30 text-white rounded-br-md border-white/20" 
-                      : "bg-white/30 text-black/90 rounded-bl-md border-white/40"
-                  )}>
-                    {m.role === "user" ? (
-                      <div className="leading-relaxed">{m.content}</div>
-                    ) : (
-                      <div className="leading-relaxed" dangerouslySetInnerHTML={{ __html: formatMarkdown(m.content) }} />
-                    )}
-                  </div>
-                </div>
-              ))}
+            {/* Unified Glassy Chat Container */}
+            <div className="bg-white/15 backdrop-blur-2xl backdrop-saturate-150 rounded-3xl border border-white/20 shadow-2xl p-6 overflow-hidden">
+              {/* Close Button */}
+              <div className="flex justify-end mb-4">
+                <button 
+                  onClick={() => setShowMessages(false)} 
+                  className="bg-black/20 backdrop-blur-md text-white/80 hover:text-white w-8 h-8 rounded-full hover:bg-black/30 flex items-center justify-center transition-all shadow-lg backdrop-saturate-150"
+                >
+                  ✕
+                </button>
+              </div>
               
-              {isTyping && (
-                <div className="flex justify-start">
-                  <div className="max-w-[85%] rounded-2xl px-4 py-3 bg-white/30 text-sm rounded-bl-md border border-white/40 shadow-2xl backdrop-blur-xl backdrop-saturate-200">
-                    <div className="flex items-center gap-3">
-                      <span className="text-xs text-black/70">Mochi is thinking</span>
-                      <div className="flex gap-1">
-                        <div className="w-2 h-2 bg-black/40 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                        <div className="w-2 h-2 bg-black/40 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                        <div className="w-2 h-2 bg-black/40 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+              {/* Messages Container */}
+              <div className="space-y-3 overflow-y-auto max-h-[50vh] font-sans">
+                {messages.map((m, i) => (
+                  <div key={i} className={clsx("flex", m.role === "user" ? "justify-end" : "justify-start")}>
+                    <div className={clsx(
+                      "max-w-[85%] rounded-xl px-4 py-3 text-base leading-relaxed",
+                      m.role === "user" 
+                        ? "bg-black/40 text-white/95 rounded-br-md" 
+                        : "bg-white/25 text-black/95 rounded-bl-md"
+                    )}>
+                      {m.role === "user" ? (
+                        <div>{m.content}</div>
+                      ) : (
+                        <div dangerouslySetInnerHTML={{ __html: formatMarkdown(m.content) }} />
+                      )}
+                    </div>
+                  </div>
+                ))}
+                
+                {isTyping && (
+                  <div className="flex justify-start">
+                    <div className="max-w-[85%] rounded-xl px-4 py-3 bg-white/25 text-base rounded-bl-md">
+                      <div className="flex items-center gap-3">
+                        <span className="text-sm text-black/80">Mochi is thinking</span>
+                        <div className="flex gap-1">
+                          <div className="w-2 h-2 bg-black/50 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                          <div className="w-2 h-2 bg-black/50 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                          <div className="w-2 h-2 bg-black/50 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              )}
-              
-              <div ref={messagesEndRef} />
+                )}
+                
+                <div ref={messagesEndRef} />
+              </div>
             </div>
           </div>
         )}
@@ -220,7 +227,7 @@ export default function ChatBubble({ getContext }: ChatBubbleProps) {
                   if (e.key === "Enter") send();
                 }}
                 placeholder="Ask Mochi about your data, charts, insights..."
-                className="flex-1 px-6 py-4 text-base bg-transparent focus:outline-none placeholder-black/60 text-black/90"
+                className="flex-1 px-6 py-4 text-base bg-transparent focus:outline-none placeholder-black/60 text-black/90 font-sans"
                 disabled={isTyping}
               />
               <button
