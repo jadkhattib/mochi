@@ -2,6 +2,24 @@
 import { useEffect, useRef, useState } from "react";
 import { clsx } from "clsx";
 
+// Add custom CSS for purple pulse animation
+if (typeof document !== 'undefined') {
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes purplePulse {
+      0%, 100% { 
+        opacity: 0.3; 
+        transform: scale(1);
+      }
+      50% { 
+        opacity: 0.7; 
+        transform: scale(1.05);
+      }
+    }
+  `;
+  document.head.appendChild(style);
+}
+
 
 
 function formatMarkdown(text: string): string {
@@ -174,8 +192,25 @@ export default function ChatBubble({ getContext }: ChatBubbleProps) {
         {/* Input Section */}
         <div className="max-w-4xl mx-auto px-6 pb-16">
           <div className="relative">
+            {/* Pulsing Purple Glow - Only show when no messages */}
+            {(!showMessages || messages.length === 0) && (
+              <>
+                <div className="absolute inset-0 rounded-full bg-purple-500/20 blur-xl" style={{
+                  animation: 'purplePulse 3s ease-in-out infinite'
+                }}></div>
+                <div className="absolute inset-0 rounded-full bg-purple-400/10 blur-2xl" style={{
+                  animation: 'purplePulse 3s ease-in-out infinite 1.5s'
+                }}></div>
+              </>
+            )}
+            
             {/* Input Container */}
-            <div className="relative bg-white/20 backdrop-blur-xl backdrop-saturate-200 rounded-full shadow-2xl border border-white/40 flex items-center p-2">
+            <div className={clsx(
+              "relative backdrop-blur-xl backdrop-saturate-200 rounded-full flex items-center p-2 transition-all duration-700",
+              (!showMessages || messages.length === 0) 
+                ? "bg-white/20 border-2 border-purple-400/50 shadow-2xl shadow-purple-400/25" 
+                : "bg-white/20 border border-white/40 shadow-2xl"
+            )}>
               <input
                 ref={inputRef}
                 value={input}
