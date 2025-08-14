@@ -166,103 +166,82 @@ export default function TVCTVPage() {
         </div>
       </div>
 
-      {/* BVOD/SVOD/AVOD Breakdown & Reach/Frequency Optimization */}
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-        <div className="rounded-xl bg-white border border-black/10 p-4">
-          <h3 className="font-medium mb-4">BVOD/SVOD/AVOD Performance</h3>
-          <div className="mb-4 grid grid-cols-1 md:grid-cols-4 gap-3">
-            {platformBreakdown.map((platform, idx) => (
-              <div key={idx} className="p-3 bg-gray-50 rounded-lg">
-                <div className="flex items-center gap-2 mb-2">
-                  <div 
-                    className="w-3 h-3 rounded-full" 
-                    style={{ backgroundColor: colors[idx % colors.length] }}
-                  ></div>
-                  <span className="font-medium text-sm">{platform.platform}</span>
-                </div>
-                <div className="space-y-1 text-xs">
-                  <div className="flex justify-between">
-                    <span className="text-black/60">ROI:</span>
-                    <span className="font-medium">{platform.roi.toFixed(2)}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-black/60">Spend:</span>
-                    <span className="font-medium">${(platform.spend / 1000).toFixed(0)}K</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-black/60">VTR:</span>
-                    <span className="font-medium">{platform.vtr ? `${platform.vtr.toFixed(1)}%` : 'N/A'}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-black/60">Viewability:</span>
-                    <span className="font-medium">{platform.viewability ? `${platform.viewability.toFixed(1)}%` : 'N/A'}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
+      {/* Weekly Reach vs Frequency Trends - Expanded */}
+      <div className="rounded-xl bg-white border border-black/10 p-4">
+        <h3 className="font-medium mb-4">Weekly Reach vs Frequency Trends</h3>
+        
+        {/* Key Metrics Row */}
+        <div className="mb-4 grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="p-3 bg-blue-50 rounded-lg">
+            <div className="text-xs text-blue-600 font-medium">Avg Weekly Reach</div>
+            <div className="text-lg font-bold text-blue-800">
+              {reachFreqOptimization.length > 0 ? 
+                (reachFreqOptimization.reduce((sum, d) => sum + d.reach, 0) / reachFreqOptimization.length).toFixed(1) : '0'}%
+            </div>
           </div>
-          
-          <ResponsiveContainer width="100%" height={200}>
-            <BarChart data={platformBreakdown} layout="horizontal">
-              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-              <XAxis type="number" tick={{ fontSize: 12 }} tickFormatter={(value) => value.toFixed(1)} />
-              <YAxis dataKey="platform" type="category" tick={{ fontSize: 12 }} width={60} />
-              <Tooltip 
-                contentStyle={{ 
-                  backgroundColor: 'white', 
-                  border: '1px solid #e0e0e0', 
-                  borderRadius: '8px',
-                  fontSize: '12px'
-                }}
-                formatter={(value, name) => [
-                  typeof value === 'number' ? value.toFixed(2) : value, 
-                  'ROI'
-                ]}
-              />
-              <Bar dataKey="roi" name="ROI" radius={[0, 4, 4, 0]}>
-                {platformBreakdown.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
-                ))}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
-          
-          <div className="mt-3 p-3 bg-blue-50 rounded-lg">
-            <h4 className="text-xs font-medium text-blue-800 mb-1">Platform Insights</h4>
-            <div className="text-xs text-blue-600 space-y-1">
-              <div>• <strong>Best ROI:</strong> {platformBreakdown.reduce((max, p) => p.roi > max.roi ? p : max, platformBreakdown[0])?.platform || 'N/A'} at {Math.max(...platformBreakdown.map(p => p.roi)).toFixed(2)} ROI</div>
-              <div>• <strong>Highest VTR:</strong> {platformBreakdown.reduce((max, p) => (p.vtr || 0) > (max.vtr || 0) ? p : max, platformBreakdown[0])?.platform || 'N/A'} at {Math.max(...platformBreakdown.map(p => p.vtr || 0)).toFixed(1)}%</div>
-              <div>• <strong>Best Viewability:</strong> {platformBreakdown.reduce((max, p) => (p.viewability || 0) > (max.viewability || 0) ? p : max, platformBreakdown[0])?.platform || 'N/A'} at {Math.max(...platformBreakdown.map(p => p.viewability || 0)).toFixed(1)}%</div>
+          <div className="p-3 bg-green-50 rounded-lg">
+            <div className="text-xs text-green-600 font-medium">Avg Frequency</div>
+            <div className="text-lg font-bold text-green-800">
+              {reachFreqOptimization.length > 0 ? 
+                (reachFreqOptimization.reduce((sum, d) => sum + d.frequency, 0) / reachFreqOptimization.length).toFixed(1) : '0'}
+            </div>
+          </div>
+          <div className="p-3 bg-orange-50 rounded-lg">
+            <div className="text-xs text-orange-600 font-medium">Peak Efficiency</div>
+            <div className="text-lg font-bold text-orange-800">
+              {reachFreqOptimization.length > 0 ? 
+                Math.max(...reachFreqOptimization.map(d => d.efficiency)).toFixed(1) : '0'}
+            </div>
+          </div>
+          <div className="p-3 bg-purple-50 rounded-lg">
+            <div className="text-xs text-purple-600 font-medium">Optimal Week</div>
+            <div className="text-lg font-bold text-purple-800">
+              {reachFreqOptimization.length > 0 ? 
+                reachFreqOptimization.reduce((max, d) => d.efficiency > max.efficiency ? d : max, reachFreqOptimization[0]).week : 'N/A'}
             </div>
           </div>
         </div>
-
-        <div className="rounded-xl bg-white border border-black/10 p-4">
-          <h3 className="font-medium mb-4">Weekly Reach vs Frequency Trends</h3>
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={reachFreqOptimization}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-              <XAxis dataKey="week" tick={{ fontSize: 12 }} />
-              <YAxis yAxisId="left" tick={{ fontSize: 12 }} />
-              <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 12 }} />
-              <Tooltip 
-                contentStyle={{ 
-                  backgroundColor: 'white', 
-                  border: '1px solid #e0e0e0', 
-                  borderRadius: '8px',
-                  fontSize: '12px'
-                }}
-                formatter={(value, name) => [
-                  typeof value === 'number' ? value.toFixed(1) : value, 
-                  name === 'reach' ? 'Reach %' : name === 'frequency' ? 'Frequency' : name === 'efficiency' ? 'Efficiency' : name
-                ]}
-              />
-              <Legend />
-              <Line yAxisId="left" type="monotone" dataKey="reach" stroke="#2d2d2d" strokeWidth={2} name="Reach %" dot={false} />
-              <Line yAxisId="left" type="monotone" dataKey="frequency" stroke="#8884d8" strokeWidth={2} name="Frequency" dot={false} />
-              <Line yAxisId="right" type="monotone" dataKey="efficiency" stroke="#82ca9d" strokeWidth={2} name="Efficiency" dot={false} />
-            </LineChart>
-          </ResponsiveContainer>
+        
+        <ResponsiveContainer width="100%" height={400}>
+          <LineChart data={reachFreqOptimization}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+            <XAxis dataKey="week" tick={{ fontSize: 12 }} />
+            <YAxis yAxisId="left" tick={{ fontSize: 12 }} />
+            <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 12 }} />
+            <Tooltip 
+              contentStyle={{ 
+                backgroundColor: 'white', 
+                border: '1px solid #e0e0e0', 
+                borderRadius: '8px',
+                fontSize: '12px'
+              }}
+              formatter={(value, name) => [
+                typeof value === 'number' ? value.toFixed(1) : value, 
+                name === 'reach' ? 'Reach %' : name === 'frequency' ? 'Frequency' : name === 'efficiency' ? 'Efficiency' : name
+              ]}
+            />
+            <Legend />
+            <Line yAxisId="left" type="monotone" dataKey="reach" stroke="#2d2d2d" strokeWidth={3} name="Reach %" dot={false} />
+            <Line yAxisId="left" type="monotone" dataKey="frequency" stroke="#8884d8" strokeWidth={3} name="Frequency" dot={false} />
+            <Line yAxisId="right" type="monotone" dataKey="efficiency" stroke="#82ca9d" strokeWidth={3} name="Efficiency" dot={false} />
+          </LineChart>
+        </ResponsiveContainer>
+        
+        {/* Analysis Insights */}
+        <div className="mt-4 p-4 bg-gradient-to-r from-gray-50 to-blue-50 rounded-lg">
+          <h4 className="text-sm font-medium text-black/80 mb-2">Reach & Frequency Insights</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-black/60">
+            <div className="space-y-1">
+              <div>• <strong>Reach Trend:</strong> {reachFreqOptimization.length > 2 && reachFreqOptimization[reachFreqOptimization.length-1].reach > reachFreqOptimization[0].reach ? 'Growing' : 'Declining'} over time</div>
+              <div>• <strong>Frequency Balance:</strong> {reachFreqOptimization.length > 0 && (reachFreqOptimization.reduce((sum, d) => sum + d.frequency, 0) / reachFreqOptimization.length) > 3 ? 'High frequency strategy' : 'Reach-focused approach'}</div>
+              <div>• <strong>Efficiency Pattern:</strong> {reachFreqOptimization.length > 1 ? 'Variable across weeks' : 'Consistent performance'}</div>
+            </div>
+            <div className="space-y-1">
+              <div>• <strong>Optimal Timing:</strong> Week {reachFreqOptimization.length > 0 ? reachFreqOptimization.reduce((max, d) => d.efficiency > max.efficiency ? d : max, reachFreqOptimization[0]).week : 'N/A'} shows peak efficiency</div>
+              <div>• <strong>Reach Ceiling:</strong> {reachFreqOptimization.length > 0 ? Math.max(...reachFreqOptimization.map(d => d.reach)).toFixed(1) : '0'}% maximum weekly reach achieved</div>
+              <div>• <strong>Strategy:</strong> {reachFreqOptimization.length > 0 && (reachFreqOptimization.reduce((sum, d) => sum + d.frequency, 0) / reachFreqOptimization.length) > 2.5 ? 'Consider reach expansion' : 'Optimize frequency capping'}</div>
+            </div>
+          </div>
         </div>
       </div>
 
