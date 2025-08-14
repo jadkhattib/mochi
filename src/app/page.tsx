@@ -8,8 +8,7 @@ import { WorldMap } from "@/components/WorldMap";
 import { CircularFlag } from "@/components/CircularFlag";
 import { getCountryCode } from "@/lib/countryFlags";
 import { formatCurrency, formatNumber, formatPercentage, formatROI } from "@/lib/formatters";
-import { Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell, PieChart, Pie, ComposedChart, Area } from "recharts";
-import { ResponsiveTreeMap } from '@nivo/treemap';
+import { Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ComposedChart, Area } from "recharts";
 
 export default function Overview() {
   const [data, setData] = useState<ApiDataResponse | null>(null);
@@ -244,51 +243,83 @@ export default function Overview() {
       </div>
 
       {/* Channel Mix Overview & Brand Performance */}
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 h-[600px]">
-        <div className="rounded-xl bg-white border border-black/10 p-4 flex flex-col h-full">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+        <div className="rounded-xl bg-white border border-black/10 p-4">
           <h3 className="font-medium mb-4">Channel Mix Overview</h3>
-          <div className="flex-1 min-h-0">
-            <ResponsiveTreeMap
-              data={{
-                name: 'Channel Mix',
-                children: channelContribution.map((channel, index) => ({
-                  name: channel.channel,
-                  value: channel.spend,
-                  color: colors[index % colors.length]
-                }))
-              }}
-              identity="name"
-              value="value"
-              valueFormat=".2s"
-              innerPadding={2}
-              outerPadding={2}
-              margin={{ top: 10, right: 10, bottom: 10, left: 10 }}
-              labelSkipSize={12}
-              labelTextColor="#ffffff"
-              colors={(node) => node.data.color || '#8884d8'}
-              borderColor={{ from: 'color', modifiers: [['darker', 0.6]] }}
-              borderWidth={2}
-              animate={true}
-              motionStiffness={90}
-              motionDamping={11}
-              tooltip={({ node }) => (
-                <div className="bg-white border border-gray-200 rounded-lg p-3 shadow-lg">
-                  <div className="font-medium text-gray-900">{node.data.name}</div>
-                  <div className="text-sm text-gray-600">
-                    Spend: {formatCurrency(node.value)}
+          <div className="space-y-4">
+            {/* Channel Performance Cards */}
+            {channelContribution.slice(0, 8).map((channel, idx) => {
+              const maxSpend = Math.max(...channelContribution.map(c => c.spend));
+              const spendPercentage = (channel.spend / maxSpend) * 100;
+              const totalSpend = channelContribution.reduce((sum, c) => sum + c.spend, 0);
+              const sharePercentage = (channel.spend / totalSpend) * 100;
+              
+              return (
+                <div key={idx} className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div 
+                        className="w-4 h-4 rounded-full flex-shrink-0" 
+                        style={{ backgroundColor: colors[idx % colors.length] }}
+                      ></div>
+                      <div>
+                        <span className="font-medium text-sm">{channel.channel}</span>
+                        <div className="text-xs text-black/60">{formatPercentage(sharePercentage, 1)} of total spend</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <div className="text-right">
+                        <div className="text-sm font-bold">{formatROI(channel.roi)}</div>
+                        <div className="text-xs text-black/60">ROI</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-sm font-medium">{formatCurrency(channel.spend, 1)}</div>
+                        <div className="text-xs text-black/60">Spend</div>
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-sm text-gray-600">
-                    {((node.value / channelContribution.reduce((sum, c) => sum + c.spend, 0)) * 100).toFixed(1)}%
+                  
+                  {/* Modern Progress Bar */}
+                  <div className="relative">
+                    <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden">
+                      <div 
+                        className="h-3 rounded-full transition-all duration-700 ease-out relative overflow-hidden"
+                        style={{ 
+                          width: `${spendPercentage}%`,
+                          backgroundColor: colors[idx % colors.length]
+                        }}
+                      >
+                        {/* Gradient overlay for depth */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Additional metrics */}
+                  <div className="flex justify-between text-xs text-black/60">
+                    <span>NR: {formatCurrency(channel.nr, 1)}</span>
+                    <span>Efficiency: {((channel.nr / channel.spend) * 100).toFixed(0)}%</span>
                   </div>
                 </div>
-              )}
-            />
+              );
+            })}
+            
+            {/* Channel Mix Summary */}
+            <div className="mt-4 p-3 bg-gradient-to-r from-gray-50 to-blue-50 rounded-lg">
+              <h4 className="text-xs font-medium text-black/80 mb-2">Channel Mix Insights</h4>
+              <div className="text-xs text-black/60 space-y-1">
+                <div>• Top channel: <strong>{channelContribution[0]?.channel || "Digital"}</strong> driving {formatPercentage((channelContribution[0]?.spend || 0) / channelContribution.reduce((sum, c) => sum + c.spend, 0) * 100, 1)} of spend</div>
+                <div>• Portfolio diversification: <strong>{channelContribution.length}</strong> active channels</div>
+                <div>• Best ROI: <strong>{channelContribution.sort((a, b) => b.roi - a.roi)[0]?.channel || "Meta"}</strong> at {formatROI(channelContribution.sort((a, b) => b.roi - a.roi)[0]?.roi || 6.2)}</div>
+                <div>• Balanced allocation optimizes reach and efficiency across media types</div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="rounded-xl bg-white border border-black/10 p-4 flex flex-col h-full">
+        <div className="rounded-xl bg-white border border-black/10 p-4">
           <h3 className="font-medium mb-4">Brand Performance Comparison</h3>
-          <div className="space-y-4 flex-1 overflow-y-auto">
+          <div className="space-y-4">
             {brandPerformance.slice(0, 6).map((brand, idx) => {
               const maxROI = Math.max(...brandPerformance.slice(0, 6).map(b => b.roi));
               const roiPercentage = (brand.roi / maxROI) * 100;

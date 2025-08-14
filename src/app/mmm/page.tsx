@@ -257,15 +257,62 @@ export default function MMMMetaPage() {
         </div>
       </div>
 
-      {/* Saturation Curves */}
+      {/* Portfolio Saturation Analysis */}
       <div className="rounded-xl bg-white border border-black/10 p-4">
-        <h3 className="font-medium mb-4">Channel Saturation Curves</h3>
+        <h3 className="font-medium mb-4">Portfolio Saturation Analysis</h3>
+        <div className="mb-4 grid grid-cols-1 md:grid-cols-4 gap-4">
+          {/* Key Metrics Cards */}
+          <div className="p-3 bg-blue-50 rounded-lg">
+            <div className="text-xs text-blue-600 font-medium">Current Spend</div>
+            <div className="text-lg font-bold text-blue-800">
+              {formatCurrency(filtered.reduce((sum, r) => sum + r.spend, 0), 1)}
+            </div>
+          </div>
+          <div className="p-3 bg-green-50 rounded-lg">
+            <div className="text-xs text-green-600 font-medium">Current ROI</div>
+            <div className="text-lg font-bold text-green-800">
+              {formatROI(filtered.reduce((sum, r) => sum + r.nr, 0) / Math.max(filtered.reduce((sum, r) => sum + r.spend, 0), 1))}
+            </div>
+          </div>
+          <div className="p-3 bg-orange-50 rounded-lg">
+            <div className="text-xs text-orange-600 font-medium">Saturation Level</div>
+            <div className="text-lg font-bold text-orange-800">
+              {saturationData.length > 1 ? `${saturationData[10]?.saturation.toFixed(1)}%` : 'N/A'}
+            </div>
+          </div>
+          <div className="p-3 bg-purple-50 rounded-lg">
+            <div className="text-xs text-purple-600 font-medium">Optimal Spend</div>
+            <div className="text-lg font-bold text-purple-800">
+              {saturationData.length > 0 ? 
+                formatCurrency(saturationData.find(d => d.marginalROI <= 1)?.spend || saturationData[Math.floor(saturationData.length * 0.7)]?.spend || 0, 1) : 
+                'N/A'
+              }
+            </div>
+          </div>
+        </div>
+        
         <ResponsiveContainer width="100%" height={400}>
           <ComposedChart data={saturationData}>
             <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-            <XAxis dataKey="spend" tick={{ fontSize: 12 }} />
-            <YAxis yAxisId="left" tick={{ fontSize: 12 }} />
-            <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 12 }} />
+            <XAxis 
+              dataKey="spend" 
+              tick={{ fontSize: 12 }} 
+              tickFormatter={(value) => formatCurrency(value, 1)}
+              label={{ value: 'Media Spend', position: 'insideBottom', offset: -10, style: { textAnchor: 'middle' } }}
+            />
+            <YAxis 
+              yAxisId="left" 
+              tick={{ fontSize: 12 }} 
+              tickFormatter={(value) => `${value.toFixed(1)}`}
+              label={{ value: 'ROI', angle: -90, position: 'insideLeft', style: { textAnchor: 'middle' } }}
+            />
+            <YAxis 
+              yAxisId="right" 
+              orientation="right" 
+              tick={{ fontSize: 12 }} 
+              tickFormatter={(value) => `${value.toFixed(0)}%`}
+              label={{ value: 'Saturation %', angle: 90, position: 'insideRight', style: { textAnchor: 'middle' } }}
+            />
             <Tooltip 
               contentStyle={{ backgroundColor: 'white', border: '1px solid #e0e0e0', borderRadius: '8px', fontSize: '12px' }}
               formatter={(value, name) => [
@@ -273,15 +320,68 @@ export default function MMMMetaPage() {
                   (name === 'roi' || name === 'marginalROI' ? formatROI(value) : 
                    name === 'saturation' ? `${value.toFixed(1)}%` : 
                    formatCurrency(value, 1)) : value,
-                name === 'marginalROI' ? 'Marginal ROI' : name === 'saturation' ? 'Saturation %' : name
+                name === 'marginalROI' ? 'Marginal ROI' : 
+                name === 'saturation' ? 'Saturation %' : 
+                name === 'roi' ? 'Portfolio ROI' :
+                name === 'nr' ? 'Net Revenue' : name
               ]}
+              labelFormatter={(value) => `Spend: ${formatCurrency(typeof value === 'number' ? value : 0, 1)}`}
             />
             <Legend />
-            <Line yAxisId="left" type="monotone" dataKey="roi" stroke="#2d2d2d" strokeWidth={2} name="ROI" dot={false} />
-            <Line yAxisId="right" type="monotone" dataKey="saturation" stroke="#ff7300" strokeWidth={2} name="Saturation %" dot={false} />
-            <Line yAxisId="left" type="monotone" dataKey="marginalROI" stroke="#82ca9d" strokeWidth={1} strokeDasharray="5 5" name="Marginal ROI" dot={false} />
+            
+            {/* Main ROI curve */}
+            <Line 
+              yAxisId="left" 
+              type="monotone" 
+              dataKey="roi" 
+              stroke="#2d2d2d" 
+              strokeWidth={3} 
+              name="Portfolio ROI" 
+              dot={false}
+            />
+            
+            {/* Saturation curve */}
+            <Area 
+              yAxisId="right" 
+              type="monotone" 
+              dataKey="saturation" 
+              stroke="#ff7300" 
+              fill="#ff7300" 
+              fillOpacity={0.2}
+              strokeWidth={2} 
+              name="Saturation %" 
+            />
+            
+            {/* Marginal ROI */}
+            <Line 
+              yAxisId="left" 
+              type="monotone" 
+              dataKey="marginalROI" 
+              stroke="#82ca9d" 
+              strokeWidth={2} 
+              strokeDasharray="8 4" 
+              name="Marginal ROI" 
+              dot={false}
+            />
           </ComposedChart>
         </ResponsiveContainer>
+        
+        {/* Analysis Insights */}
+        <div className="mt-4 p-4 bg-gradient-to-r from-gray-50 to-blue-50 rounded-lg">
+          <h4 className="text-sm font-medium text-black/80 mb-2">Saturation Analysis Insights</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-black/60">
+            <div className="space-y-1">
+              <div>• <strong>Current Position:</strong> Portfolio operating at {saturationData.length > 1 ? `${saturationData[10]?.saturation.toFixed(1)}%` : 'N/A'} saturation</div>
+              <div>• <strong>Efficiency Status:</strong> {saturationData.length > 10 && saturationData[10]?.marginalROI > 1 ? 'Room for scaling' : 'Approaching optimal level'}</div>
+              <div>• <strong>Investment Range:</strong> Optimal spend between {formatCurrency((saturationData[0]?.spend || 0) * 0.8, 1)} - {formatCurrency((saturationData[0]?.spend || 0) * 1.5, 1)}</div>
+            </div>
+            <div className="space-y-1">
+              <div>• <strong>ROI Trajectory:</strong> {saturationData.length > 1 && saturationData[10]?.roi > saturationData[5]?.roi ? 'Declining with scale' : 'Stable performance'}</div>
+              <div>• <strong>Marginal Returns:</strong> Each additional dollar generating {saturationData.length > 10 ? formatROI(saturationData[10]?.marginalROI || 0) : 'N/A'} ROI</div>
+              <div>• <strong>Saturation Risk:</strong> {saturationData.length > 1 && saturationData[10]?.saturation > 70 ? 'High - consider diversification' : 'Moderate - safe to scale'}</div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Attribution Models Comparison */}

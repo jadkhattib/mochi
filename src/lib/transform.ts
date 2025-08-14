@@ -158,38 +158,43 @@ function getShortTermRate(channel: ChannelId): number {
 
 // Saturation curve analysis
 export function toSaturationCurveAnalysis(records: DailyRecord[]) {
-  const channels = new Map<ChannelId, { spend: number; nr: number }>();
+  // Calculate total portfolio metrics
+  const totalSpend = records.reduce((sum, r) => sum + r.spend, 0);
+  const totalNR = records.reduce((sum, r) => sum + r.nr, 0);
+  const currentROI = totalSpend > 0 ? totalNR / totalSpend : 0;
   
-  for (const r of records) {
-    const prev = channels.get(r.channel) ?? { spend: 0, nr: 0 };
-    prev.spend += r.spend;
-    prev.nr += r.nr;
-    channels.set(r.channel, prev);
+  // Generate single integrated saturation curve for the portfolio
+  const points: Array<{ spend: number; nr: number; roi: number; saturation: number; marginalROI: number }> = [];
+  const maxSpend = totalSpend * 3; // Extend to 300% of current spend for broader analysis
+  const baseEfficiency = totalNR / totalSpend;
+  
+  for (let i = 0; i <= 30; i++) {
+    const spendLevel = (maxSpend / 30) * i;
+    
+    // Portfolio saturation curve using exponential decay model
+    const saturationFactor = 1 - Math.exp(-spendLevel / (totalSpend * 1.2));
+    
+    // Apply diminishing returns to efficiency
+    const efficiency = baseEfficiency * (1 - Math.pow(saturationFactor, 1.5) * 0.4);
+    const projectedNR = spendLevel * efficiency;
+    const roi = spendLevel > 0 ? projectedNR / spendLevel : 0;
+    
+    // Calculate marginal ROI (incremental ROI for additional spend)
+    const prevPoint = points[i - 1];
+    const marginalROI = prevPoint && spendLevel > prevPoint.spend ? 
+      (projectedNR - prevPoint.nr) / (spendLevel - prevPoint.spend) : 
+      efficiency;
+    
+    points.push({
+      spend: spendLevel,
+      nr: projectedNR,
+      roi,
+      saturation: saturationFactor * 100,
+      marginalROI
+    });
   }
   
-  // Generate saturation curve points
-  return Array.from(channels.entries()).map(([channelId, ch]) => {
-    const points: Array<{ channel: string; spend: number; nr: number; roi: number; saturation: number; marginalROI: number }> = [];
-    const maxSpend = ch.spend * 2; // Extend to 200% of current spend
-    const currentEfficiency = ch.nr / ch.spend;
-    
-    for (let i = 0; i <= 20; i++) {
-      const spendLevel = (maxSpend / 20) * i;
-      const saturation = 1 - Math.exp(-spendLevel / (ch.spend * 0.8)); // Diminishing returns curve
-      const marginalNR = saturation * currentEfficiency * spendLevel;
-      const roi = spendLevel > 0 ? marginalNR / spendLevel : 0;
-      
-      points.push({
-        channel: channelId,
-        spend: spendLevel,
-        nr: marginalNR,
-        roi,
-        saturation: saturation * 100,
-        marginalROI: i > 0 ? (marginalNR - (points[i-1]?.nr || 0)) / ((spendLevel - (points[i-1]?.spend || 0)) || 1) : currentEfficiency
-      });
-    }
-    return points;
-  }).flat();
+  return points;
 }
 
 // Media efficiency frontier analysis
