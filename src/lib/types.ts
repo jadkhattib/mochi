@@ -20,7 +20,7 @@ export type ChannelId =
   | "Meta"
   | "Google"
   | "TikTok"
-  | "Amazon Retail Media"
+  | "Amazon"
   | "Promo"
   | "Owned"
   | "Earned";
@@ -114,7 +114,7 @@ export const ALL_CHANNELS: ChannelId[] = [
   "Meta",
   "Google",
   "TikTok",
-  "Amazon Retail Media",
+  "Amazon",
   "Promo",
   "Owned",
   "Earned",

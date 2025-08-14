@@ -148,7 +148,7 @@ function getShortTermRate(channel: ChannelId): number {
     'Meta': 0.7, // High short-term impact
     'Google': 0.8, // Very high short-term
     'TikTok': 0.65,
-    'Amazon Retail Media': 0.85, // Mostly short-term
+    'Amazon': 0.85, // Mostly short-term
     'Promo': 0.95, // Almost all short-term
     'Owned': 0.5,
     'Earned': 0.6
@@ -677,7 +677,7 @@ export function toDigitalChannelTimeseries(records: DailyRecord[]): Array<{ date
   const byDate = new Map<string, { date: string; metaNr: number; googleNr: number; tiktokNr: number; amazonNr: number }>();
   
   for (const r of records) {
-    const isDigital = r.channel === "Meta" || r.channel === "Google" || r.channel === "TikTok" || r.channel === "Amazon Retail Media";
+    const isDigital = r.channel === "Meta" || r.channel === "Google" || r.channel === "TikTok" || r.channel === "Amazon";
     if (!isDigital) continue;
     
     const key = r.date;
@@ -693,7 +693,7 @@ export function toDigitalChannelTimeseries(records: DailyRecord[]): Array<{ date
       case "TikTok":
         prev.tiktokNr += r.nr;
         break;
-      case "Amazon Retail Media":
+      case "Amazon":
         prev.amazonNr += r.nr;
         break;
     }
@@ -708,7 +708,7 @@ export function toVTRViewabilityScatter(records: DailyRecord[]): Array<{ vtr: nu
   const points: Array<{ vtr: number; viewability: number; roi: number; channel: string; spend: number }> = [];
   
   for (const r of records) {
-    const isDigital = r.channel === "Meta" || r.channel === "Google" || r.channel === "TikTok" || r.channel === "Amazon Retail Media";
+    const isDigital = r.channel === "Meta" || r.channel === "Google" || r.channel === "TikTok" || r.channel === "Amazon";
     if (!isDigital || typeof r.vtr !== "number" || typeof r.viewability !== "number") continue;
     
     points.push({
@@ -727,7 +727,7 @@ export function toBuyingTypeAnalysis(records: DailyRecord[]): Array<{ buyingType
   const agg = new Map<string, { buyingType: string; spend: number; nr: number; ctrSum: number; cpcSum: number; count: number }>();
   
   for (const r of records) {
-    const isDigital = r.channel === "Meta" || r.channel === "Google" || r.channel === "TikTok" || r.channel === "Amazon Retail Media";
+    const isDigital = r.channel === "Meta" || r.channel === "Google" || r.channel === "TikTok" || r.channel === "Amazon";
     if (!isDigital || !r.buyingType) continue;
     
     const prev = agg.get(r.buyingType) ?? { buyingType: r.buyingType, spend: 0, nr: 0, ctrSum: 0, cpcSum: 0, count: 0 };
@@ -760,7 +760,7 @@ export function toTargetingImpactAnalysis(records: DailyRecord[]): Array<{ targe
   const agg = new Map<string, { targeting: string; spend: number; nr: number; impressions: number; reachSum: number; freqSum: number; count: number }>();
   
   for (const r of records) {
-    const isDigital = r.channel === "Meta" || r.channel === "Google" || r.channel === "TikTok" || r.channel === "Amazon Retail Media";
+    const isDigital = r.channel === "Meta" || r.channel === "Google" || r.channel === "TikTok" || r.channel === "Amazon";
     if (!isDigital || !r.targeting) continue;
     
     const prev = agg.get(r.targeting) ?? { targeting: r.targeting, spend: 0, nr: 0, impressions: 0, reachSum: 0, freqSum: 0, count: 0 };
@@ -795,7 +795,7 @@ export function toVideoVsStaticAnalysis(records: DailyRecord[]): Array<{ format:
   const agg = new Map<string, { format: string; spend: number; nr: number; vtrSum: number; vtrCount: number; engagementSum: number; count: number }>();
   
   for (const r of records) {
-    const isDigital = r.channel === "Meta" || r.channel === "Google" || r.channel === "TikTok" || r.channel === "Amazon Retail Media";
+    const isDigital = r.channel === "Meta" || r.channel === "Google" || r.channel === "TikTok" || r.channel === "Amazon";
     if (!isDigital || !r.format) continue;
     
     const prev = agg.get(r.format) ?? { format: r.format, spend: 0, nr: 0, vtrSum: 0, vtrCount: 0, engagementSum: 0, count: 0 };
@@ -830,7 +830,7 @@ export function toCampaignSetupLearnings(records: DailyRecord[]): Array<{ campai
   const campaigns = new Map<string, { campaign: string; channel: string; targeting: string; buyingType: string; format: string; spend: number; nr: number }>();
   
   for (const r of records) {
-    const isDigital = r.channel === "Meta" || r.channel === "Google" || r.channel === "TikTok" || r.channel === "Amazon Retail Media";
+    const isDigital = r.channel === "Meta" || r.channel === "Google" || r.channel === "TikTok" || r.channel === "Amazon";
     if (!isDigital || !r.campaignName) continue;
     
     const key = `${r.campaignName}-${r.channel}`;
@@ -875,7 +875,7 @@ export function toFunnelStageBudgetAnalysis(records: DailyRecord[]): Array<{ sta
   let totalSpend = 0;
   
   for (const r of records) {
-    const isDigital = r.channel === "Meta" || r.channel === "Google" || r.channel === "TikTok" || r.channel === "Amazon Retail Media";
+    const isDigital = r.channel === "Meta" || r.channel === "Google" || r.channel === "TikTok" || r.channel === "Amazon";
     if (!isDigital || !r.funnelStage) continue;
     
     const prev = agg.get(r.funnelStage) ?? { stage: r.funnelStage, spend: 0, nr: 0 };
@@ -935,7 +935,7 @@ export function toTemporalSynergyAnalysis(records: DailyRecord[]): Array<{ date:
     const prev = byDate.get(key) ?? { date: r.date, tvSpend: 0, digitalSpend: 0, totalNR: 0, count: 0 };
     
     const isTV = r.channel === "Linear TV" || r.channel === "CTV" || r.channel === "OLV" || r.channel === "BVOD";
-    const isDigital = r.channel === "Meta" || r.channel === "Google" || r.channel === "TikTok" || r.channel === "Amazon Retail Media";
+    const isDigital = r.channel === "Meta" || r.channel === "Google" || r.channel === "TikTok" || r.channel === "Amazon";
     
     if (isTV) prev.tvSpend += r.spend;
     if (isDigital) prev.digitalSpend += r.spend;
@@ -1036,7 +1036,7 @@ export function toCrossChannelLiftAnalysis(records: DailyRecord[]): Array<{ base
     { base: "CTV", support: "Meta" },
     { base: "CTV", support: "TikTok" },
     { base: "Meta", support: "Google" },
-    { base: "Google", support: "Amazon Retail Media" }
+    { base: "Google", support: "Amazon" }
   ];
   
   const results: Array<{ baseChannel: string; supportChannel: string; baseROI: number; liftedROI: number; incrementalLift: number }> = [];

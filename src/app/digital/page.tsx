@@ -41,7 +41,7 @@ export default function DigitalDeepDivePage() {
     "Meta": "#1877F2",
     "Google": "#4285F4", 
     "TikTok": "#000000",
-    "Amazon Retail Media": "#FF9900"
+    "Amazon": "#FF9900"
   };
 
   // Calculate key insights
@@ -101,7 +101,7 @@ export default function DigitalDeepDivePage() {
             <Line type="monotone" dataKey="metaNr" stroke={channelColors.Meta} strokeWidth={2} name="Meta NR" dot={false} />
             <Line type="monotone" dataKey="googleNr" stroke={channelColors.Google} strokeWidth={2} name="Google NR" dot={false} />
             <Line type="monotone" dataKey="tiktokNr" stroke={channelColors.TikTok} strokeWidth={2} name="TikTok NR" dot={false} />
-            <Line type="monotone" dataKey="amazonNr" stroke={channelColors["Amazon Retail Media"]} strokeWidth={2} name="Amazon NR" dot={false} />
+            <Line type="monotone" dataKey="amazonNr" stroke={channelColors["Amazon"]} strokeWidth={2} name="Amazon NR" dot={false} />
           </LineChart>
         </ResponsiveContainer>
       </div>

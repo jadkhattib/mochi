@@ -44,7 +44,7 @@ const channelParams: ChannelParams[] = [
   { channel: "Meta", halfLifeDays: 6, minThresholdSpend: 600, maxMarginalROI: 5.5, maxROI: 4, saturationPointSpend: 35000 },
   { channel: "Google", halfLifeDays: 5, minThresholdSpend: 700, maxMarginalROI: 4.8, maxROI: 3.5, saturationPointSpend: 32000 },
   { channel: "TikTok", halfLifeDays: 5, minThresholdSpend: 500, maxMarginalROI: 5.2, maxROI: 3.6, saturationPointSpend: 28000 },
-  { channel: "Amazon Retail Media", halfLifeDays: 4, minThresholdSpend: 800, maxMarginalROI: 6, maxROI: 4.2, saturationPointSpend: 40000 },
+  { channel: "Amazon", halfLifeDays: 4, minThresholdSpend: 800, maxMarginalROI: 6, maxROI: 4.2, saturationPointSpend: 40000 },
   { channel: "Promo", halfLifeDays: 2, minThresholdSpend: 1000, maxMarginalROI: 7, maxROI: 5, saturationPointSpend: 90000 },
   { channel: "Owned", halfLifeDays: 10, minThresholdSpend: 0, maxMarginalROI: 3, maxROI: 2, saturationPointSpend: 5000 },
   { channel: "Earned", halfLifeDays: 14, minThresholdSpend: 0, maxMarginalROI: 2, maxROI: 1.5, saturationPointSpend: 2000 },
@@ -127,7 +127,7 @@ function channelWeight(channel: ChannelId): number {
     Meta: 0.17,
     Google: 0.16,
     TikTok: 0.08,
-    "Amazon Retail Media": 0.07,
+    "Amazon": 0.07,
     Promo: 0.06,
     Owned: 0.02,
     Earned: 0.01,
@@ -177,7 +177,7 @@ export function generateDummyData(): ApiDataResponse {
         const impressions = Math.round(spend * randAround(30, 0.3, rng));
         const reach = Math.round(impressions * randAround(0.3, 0.2, rng));
         const frequency = impressions > 0 && reach > 0 ? +(impressions / Math.max(1, reach)).toFixed(2) : 0;
-        const viewability = ["Meta", "Google", "TikTok", "OLV", "CTV", "BVOD", "Amazon Retail Media"].includes(channel)
+        const viewability = ["Meta", "Google", "TikTok", "OLV", "CTV", "BVOD", "Amazon"].includes(channel)
           ? +randAround(0.6, 0.15, rng).toFixed(2)
           : undefined;
         const vtr = ["OLV", "CTV", "BVOD", "Meta", "TikTok"].includes(channel)
@@ -211,11 +211,11 @@ export function generateDummyData(): ApiDataResponse {
           ? (rng() < 0.25 ? "Awareness" : rng() < 0.5 ? "Engagement" : rng() < 0.8 ? "Click" : "Lead")
           : undefined;
         const targeting: TargetingType | undefined = rng() < 0.5 ? "BAU W25-54" : rng() < 0.8 ? "Strategy Segment" : "CDP 1P";
-        const publisher: Publisher | undefined = channel === "Meta" ? "Meta" : channel === "Google" ? (rng() > 0.5 ? "Google" : "YouTube") : channel === "TikTok" ? "TikTok" : channel === "Amazon Retail Media" ? "Amazon" : channel === "OLV" ? "DV360" : undefined;
+        const publisher: Publisher | undefined = channel === "Meta" ? "Meta" : channel === "Google" ? (rng() > 0.5 ? "Google" : "YouTube") : channel === "TikTok" ? "TikTok" : channel === "Amazon" ? "Amazon" : channel === "OLV" ? "DV360" : undefined;
         const copyLengthSec: 6 | 10 | 15 | 30 | undefined = adFormat === "Video" ? ([6, 10, 15, 30] as const)[Math.floor(rng() * 4)] : undefined;
         const campaignName = `${brand} ${market} ${adFormat} ${channel} Campaign`;
         const copyName = `${adFormat}-${copyLengthSec ?? 0}s`;
-        const isRetailMedia = channel === "Amazon Retail Media";
+        const isRetailMedia = channel === "Amazon";
         const isPromo = channel === "Promo";
         const isConsumerMedia = !isRetailMedia && !isPromo;
 
