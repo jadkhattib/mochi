@@ -200,7 +200,7 @@ export default function PublishersPage() {
                 </tr>
               </thead>
               <tbody>
-                {crossCountryAnalysis.slice(0, 12).map((row, idx) => (
+                {crossCountryAnalysis.slice(0, 8).map((row, idx) => (
                   <tr key={idx} className="border-b border-black/5 hover:bg-black/5">
                     <td className="py-2 px-3">
                       <span className="px-2 py-1 rounded text-xs" style={{ 
