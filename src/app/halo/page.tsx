@@ -220,63 +220,170 @@ export default function HaloSynergyPage() {
       {/* Channel Network Strength - Horizontal Section */}
       <div className="rounded-xl bg-white border border-black/10 p-4">
         <h3 className="font-medium mb-4">Channel Network Strength</h3>
-        <div className="relative bg-gradient-to-br from-gray-50 to-blue-50 rounded-lg p-6" style={{ height: '250px' }}>
-          {/* Center nodes representing major channels */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="relative w-full h-full max-w-4xl max-h-60">
-              {/* TV Cluster */}
-              <div className="absolute top-6 left-12 flex flex-col items-center">
-                <div className="w-14 h-14 bg-gray-800 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-lg">TV</div>
-                <div className="mt-2 text-xs text-center text-black/70">Linear<br/>CTV</div>
+        
+        {/* Network Visualization with Modern Design */}
+        <div className="relative overflow-hidden">
+          {/* Background gradient */}
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-50 via-purple-50 to-orange-50 rounded-lg opacity-60"></div>
+          
+          {/* Main network container */}
+          <div className="relative p-8" style={{ height: '320px' }}>
+            
+            {/* Channel nodes arranged in a better layout */}
+            <div className="absolute inset-0">
+              
+              {/* Linear TV - Top Left */}
+              <div className="absolute top-12 left-16 group cursor-pointer">
+                <div className="relative">
+                  <div className="w-16 h-16 bg-gradient-to-br from-gray-700 to-gray-900 rounded-xl flex items-center justify-center text-white font-bold shadow-xl border-2 border-white transform transition-transform group-hover:scale-110">
+                    <span className="text-sm">TV</span>
+                  </div>
+                  <div className="absolute -top-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white"></div>
+                  <div className="mt-2 text-xs text-center font-medium text-gray-700">Linear TV</div>
+                </div>
               </div>
               
-              {/* Digital Cluster */}
-              <div className="absolute top-6 right-12 flex flex-col items-center">
-                <div className="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-lg">DIG</div>
-                <div className="mt-2 text-xs text-center text-black/70">Meta<br/>Google</div>
+              {/* CTV - Top Center */}
+              <div className="absolute top-8 left-1/2 transform -translate-x-1/2 group cursor-pointer">
+                <div className="relative">
+                  <div className="w-18 h-18 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center text-white font-bold shadow-xl border-2 border-white transform transition-transform group-hover:scale-110">
+                    <span className="text-sm">CTV</span>
+                  </div>
+                  <div className="absolute -top-1 -right-1 w-5 h-5 bg-blue-500 rounded-full border-2 border-white"></div>
+                  <div className="mt-2 text-xs text-center font-medium text-gray-700">Connected TV</div>
+                </div>
               </div>
               
-              {/* Social Cluster */}
-              <div className="absolute bottom-6 left-24 flex flex-col items-center">
-                <div className="w-14 h-14 bg-purple-600 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-lg">SOC</div>
-                <div className="mt-2 text-xs text-center text-black/70">TikTok<br/>Meta</div>
+              {/* Meta - Top Right */}
+              <div className="absolute top-12 right-16 group cursor-pointer">
+                <div className="relative">
+                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-700 rounded-xl flex items-center justify-center text-white font-bold shadow-xl border-2 border-white transform transition-transform group-hover:scale-110">
+                    <span className="text-xs">META</span>
+                  </div>
+                  <div className="absolute -top-1 -right-1 w-5 h-5 bg-blue-400 rounded-full border-2 border-white"></div>
+                  <div className="mt-2 text-xs text-center font-medium text-gray-700">Meta Ads</div>
+                </div>
               </div>
               
-              {/* Retail Cluster */}
-              <div className="absolute bottom-6 right-24 flex flex-col items-center">
-                <div className="w-14 h-14 bg-orange-600 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-lg">RET</div>
-                <div className="mt-2 text-xs text-center text-black/70">Amazon<br/>Promo</div>
+              {/* Google - Middle Left */}
+              <div className="absolute top-1/2 left-8 transform -translate-y-1/2 group cursor-pointer">
+                <div className="relative">
+                  <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-green-700 rounded-xl flex items-center justify-center text-white font-bold shadow-xl border-2 border-white transform transition-transform group-hover:scale-110">
+                    <span className="text-sm">GOOG</span>
+                  </div>
+                  <div className="absolute -top-1 -right-1 w-6 h-6 bg-yellow-500 rounded-full border-2 border-white"></div>
+                  <div className="mt-2 text-xs text-center font-medium text-gray-700">Google Ads</div>
+                </div>
               </div>
               
-              {/* Connection lines showing synergy strength */}
-              <svg className="absolute inset-0 w-full h-full pointer-events-none">
-                {/* Strong connections */}
-                <line x1="100" y1="50" x2="320" y2="50" stroke="#2d2d2d" strokeWidth="5" opacity="0.7" />
-                <line x1="100" y1="50" x2="120" y2="170" stroke="#8884d8" strokeWidth="4" opacity="0.6" />
-                <line x1="320" y1="50" x2="300" y2="170" stroke="#82ca9d" strokeWidth="4" opacity="0.6" />
-                <line x1="120" y1="170" x2="300" y2="170" stroke="#ffc658" strokeWidth="3" opacity="0.5" />
+              {/* TikTok - Middle Right */}
+              <div className="absolute top-1/2 right-8 transform -translate-y-1/2 group cursor-pointer">
+                <div className="relative">
+                  <div className="w-16 h-16 bg-gradient-to-br from-pink-500 to-purple-600 rounded-xl flex items-center justify-center text-white font-bold shadow-xl border-2 border-white transform transition-transform group-hover:scale-110">
+                    <span className="text-xs">TIKTOK</span>
+                  </div>
+                  <div className="absolute -top-1 -right-1 w-5 h-5 bg-pink-400 rounded-full border-2 border-white"></div>
+                  <div className="mt-2 text-xs text-center font-medium text-gray-700">TikTok Ads</div>
+                </div>
+              </div>
+              
+              {/* Amazon - Bottom Left */}
+              <div className="absolute bottom-12 left-24 group cursor-pointer">
+                <div className="relative">
+                  <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-700 rounded-xl flex items-center justify-center text-white font-bold shadow-xl border-2 border-white transform transition-transform group-hover:scale-110">
+                    <span className="text-xs">AMZN</span>
+                  </div>
+                  <div className="absolute -top-1 -right-1 w-5 h-5 bg-orange-400 rounded-full border-2 border-white"></div>
+                  <div className="mt-2 text-xs text-center font-medium text-gray-700">Amazon</div>
+                </div>
+              </div>
+              
+              {/* Promo - Bottom Right */}
+              <div className="absolute bottom-12 right-24 group cursor-pointer">
+                <div className="relative">
+                  <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-red-700 rounded-xl flex items-center justify-center text-white font-bold shadow-xl border-2 border-white transform transition-transform group-hover:scale-110">
+                    <span className="text-xs">PROMO</span>
+                  </div>
+                  <div className="absolute -top-1 -right-1 w-5 h-5 bg-red-400 rounded-full border-2 border-white"></div>
+                  <div className="mt-2 text-xs text-center font-medium text-gray-700">Promotions</div>
+                </div>
+              </div>
+              
+              {/* Dynamic Connection Lines with Glow Effects */}
+              <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ filter: 'drop-shadow(0 0 4px rgba(0,0,0,0.1))' }}>
+                <defs>
+                  <linearGradient id="strongGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#374151" stopOpacity="0.8"/>
+                    <stop offset="100%" stopColor="#6B7280" stopOpacity="0.4"/>
+                  </linearGradient>
+                  <linearGradient id="mediumGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.7"/>
+                    <stop offset="100%" stopColor="#93C5FD" stopOpacity="0.3"/>
+                  </linearGradient>
+                  <linearGradient id="moderateGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#F59E0B" stopOpacity="0.6"/>
+                    <stop offset="100%" stopColor="#FCD34D" stopOpacity="0.2"/>
+                  </linearGradient>
+                </defs>
                 
-                {/* Cross connections */}
-                <line x1="100" y1="50" x2="300" y2="170" stroke="#ff7300" strokeWidth="3" opacity="0.4" strokeDasharray="8,8" />
-                <line x1="320" y1="50" x2="120" y2="170" stroke="#d084d0" strokeWidth="3" opacity="0.4" strokeDasharray="8,8" />
+                {/* Strongest synergies - thick animated lines */}
+                <line x1="100" y1="80" x2="300" y2="60" stroke="url(#strongGradient)" strokeWidth="6" strokeLinecap="round">
+                  <animate attributeName="stroke-dasharray" values="0,20;20,0" dur="3s" repeatCount="indefinite"/>
+                </line>
+                <line x1="120" y1="160" x2="320" y2="80" stroke="url(#strongGradient)" strokeWidth="5" strokeLinecap="round">
+                  <animate attributeName="stroke-dasharray" values="0,15;15,0" dur="4s" repeatCount="indefinite"/>
+                </line>
+                
+                {/* Good synergies - medium lines */}
+                <line x1="80" y1="160" x2="300" y2="60" stroke="url(#mediumGradient)" strokeWidth="4" strokeLinecap="round" strokeDasharray="8,4">
+                  <animate attributeName="stroke-dashoffset" values="0;12" dur="2s" repeatCount="indefinite"/>
+                </line>
+                <line x1="320" y1="80" x2="360" y2="160" stroke="url(#mediumGradient)" strokeWidth="4" strokeLinecap="round" strokeDasharray="8,4">
+                  <animate attributeName="stroke-dashoffset" values="0;12" dur="2.5s" repeatCount="indefinite"/>
+                </line>
+                
+                {/* Moderate synergies - thinner dotted lines */}
+                <line x1="100" y1="80" x2="160" y2="240" stroke="url(#moderateGradient)" strokeWidth="3" strokeLinecap="round" strokeDasharray="4,8" opacity="0.7"/>
+                <line x1="300" y1="60" x2="360" y2="240" stroke="url(#moderateGradient)" strokeWidth="3" strokeLinecap="round" strokeDasharray="4,8" opacity="0.7"/>
+                <line x1="160" y1="240" x2="360" y2="240" stroke="url(#moderateGradient)" strokeWidth="2" strokeLinecap="round" strokeDasharray="6,6" opacity="0.6"/>
               </svg>
             </div>
           </div>
         </div>
         
-        {/* Legend */}
-        <div className="mt-4 flex flex-wrap justify-center gap-6 text-xs">
-          <div className="flex items-center gap-2">
-            <div className="w-4 h-1 bg-gray-800"></div>
-            <span>Strong Synergy (25%+)</span>
+        {/* Enhanced Legend with Performance Metrics */}
+        <div className="mt-4 bg-gray-50 rounded-lg p-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-6 h-2 bg-gradient-to-r from-gray-700 to-gray-500 rounded-full"></div>
+              <div>
+                <div className="text-sm font-medium text-gray-800">Strong Synergy</div>
+                <div className="text-xs text-gray-600">25%+ lift when activated together</div>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="w-6 h-2 bg-gradient-to-r from-blue-600 to-blue-400 rounded-full"></div>
+              <div>
+                <div className="text-sm font-medium text-gray-800">Good Synergy</div>
+                <div className="text-xs text-gray-600">15-25% performance boost</div>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="w-6 h-2 bg-gradient-to-r from-orange-500 to-yellow-400 rounded-full"></div>
+              <div>
+                <div className="text-sm font-medium text-gray-800">Moderate Synergy</div>
+                <div className="text-xs text-gray-600">8-15% incremental value</div>
+              </div>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-4 h-1 bg-blue-600"></div>
-            <span>Good Synergy (15-25%)</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-4 h-1 bg-gray-400 opacity-60" style={{borderTop: "1px dashed #666"}}></div>
-            <span>Moderate Synergy (8-15%)</span>
+          
+          {/* Key Insights */}
+          <div className="mt-4 pt-3 border-t border-gray-200">
+            <div className="text-xs text-gray-600 space-y-1">
+              <div>• <strong>TV + Google:</strong> Strongest cross-channel synergy for reach amplification</div>
+              <div>• <strong>Meta + TikTok:</strong> Social ecosystem synergy drives engagement</div>
+              <div>• <strong>CTV Hub:</strong> Central connector enabling digital-TV convergence</div>
+            </div>
           </div>
         </div>
       </div>
