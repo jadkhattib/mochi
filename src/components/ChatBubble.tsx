@@ -119,65 +119,54 @@ export default function ChatBubble({ getContext }: ChatBubbleProps) {
           open ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
         )}
       >
-        {/* Messages Container - Only show if there are messages and showMessages is true */}
+        {/* Floating Messages - Only show if there are messages and showMessages is true */}
         {messages.length > 0 && showMessages && (
           <div className="max-w-4xl mx-auto px-6 pb-4">
-            <div className="bg-white/80 backdrop-blur-xl rounded-t-2xl border border-white/30 shadow-2xl max-h-[60vh] overflow-hidden backdrop-saturate-150">
-              <div className="p-4 border-b border-black/10 bg-[#2d2d2d] text-white rounded-t-2xl">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-                      <span className="text-xs font-medium">AI</span>
-                    </div>
-                    <div>
-                      <h3 className="font-medium text-sm">Mochi</h3>
-                      <p className="text-xs text-white/70">Brand Intelligence Assistant</p>
-                    </div>
+            {/* Floating Close Button */}
+            <div className="flex justify-end mb-4">
+              <button 
+                onClick={() => setShowMessages(false)} 
+                className="bg-black/20 backdrop-blur-md text-white/80 hover:text-white w-10 h-10 rounded-full hover:bg-black/30 flex items-center justify-center transition-all shadow-lg backdrop-saturate-150"
+              >
+                ✕
+              </button>
+            </div>
+            
+            {/* Floating Messages */}
+            <div className="space-y-4 overflow-y-auto max-h-[50vh] pb-4">
+              {messages.map((m, i) => (
+                <div key={i} className={clsx("flex", m.role === "user" ? "justify-end" : "justify-start")}>
+                  <div className={clsx(
+                    "max-w-[85%] rounded-2xl px-4 py-3 text-sm shadow-2xl backdrop-blur-xl backdrop-saturate-200 border",
+                    m.role === "user" 
+                      ? "bg-black/30 text-white rounded-br-md border-white/20" 
+                      : "bg-white/30 text-black/90 rounded-bl-md border-white/40"
+                  )}>
+                    {m.role === "user" ? (
+                      <div className="leading-relaxed">{m.content}</div>
+                    ) : (
+                      <div className="leading-relaxed" dangerouslySetInnerHTML={{ __html: formatMarkdown(m.content) }} />
+                    )}
                   </div>
-                  <button 
-                    onClick={() => setShowMessages(false)} 
-                    className="text-white/80 hover:text-white w-8 h-8 rounded-full hover:bg-white/10 flex items-center justify-center transition-colors"
-                  >
-                    ✕
-                  </button>
                 </div>
-              </div>
+              ))}
               
-              <div className="p-4 space-y-4 overflow-y-auto max-h-[45vh]">
-                {messages.map((m, i) => (
-                  <div key={i} className={clsx("flex", m.role === "user" ? "justify-end" : "justify-start")}>
-                    <div className={clsx(
-                      "max-w-[85%] rounded-2xl px-4 py-3 text-sm shadow-lg backdrop-blur-md",
-                      m.role === "user" 
-                        ? "bg-[#2d2d2d]/90 text-white rounded-br-md backdrop-saturate-150" 
-                        : "bg-white/70 text-black/90 rounded-bl-md border border-white/50 backdrop-saturate-150"
-                    )}>
-                      {m.role === "user" ? (
-                        <div className="leading-relaxed">{m.content}</div>
-                      ) : (
-                        <div className="leading-relaxed" dangerouslySetInnerHTML={{ __html: formatMarkdown(m.content) }} />
-                      )}
-                    </div>
-                  </div>
-                ))}
-                
-                {isTyping && (
-                  <div className="flex justify-start">
-                    <div className="max-w-[85%] rounded-2xl px-4 py-3 bg-white/70 text-sm rounded-bl-md border border-white/50 shadow-lg backdrop-blur-md backdrop-saturate-150">
-                      <div className="flex items-center gap-3">
-                        <span className="text-xs text-black/60">Mochi is thinking</span>
-                        <div className="flex gap-1">
-                          <div className="w-2 h-2 bg-[#2d2d2d]/30 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                          <div className="w-2 h-2 bg-[#2d2d2d]/30 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                          <div className="w-2 h-2 bg-[#2d2d2d]/30 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
-                        </div>
+              {isTyping && (
+                <div className="flex justify-start">
+                  <div className="max-w-[85%] rounded-2xl px-4 py-3 bg-white/30 text-sm rounded-bl-md border border-white/40 shadow-2xl backdrop-blur-xl backdrop-saturate-200">
+                    <div className="flex items-center gap-3">
+                      <span className="text-xs text-black/70">Mochi is thinking</span>
+                      <div className="flex gap-1">
+                        <div className="w-2 h-2 bg-black/40 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                        <div className="w-2 h-2 bg-black/40 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                        <div className="w-2 h-2 bg-black/40 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
                       </div>
                     </div>
                   </div>
-                )}
-                
-                <div ref={messagesEndRef} />
-              </div>
+                </div>
+              )}
+              
+              <div ref={messagesEndRef} />
             </div>
           </div>
         )}
@@ -186,7 +175,7 @@ export default function ChatBubble({ getContext }: ChatBubbleProps) {
         <div className="max-w-4xl mx-auto px-6 pb-16">
           <div className="relative">
             {/* Input Container */}
-            <div className="relative bg-white/90 backdrop-blur-xl backdrop-saturate-150 rounded-full shadow-2xl border border-white/30 flex items-center p-2">
+            <div className="relative bg-white/20 backdrop-blur-xl backdrop-saturate-200 rounded-full shadow-2xl border border-white/40 flex items-center p-2">
               <input
                 ref={inputRef}
                 value={input}
@@ -196,7 +185,7 @@ export default function ChatBubble({ getContext }: ChatBubbleProps) {
                   if (e.key === "Enter") send();
                 }}
                 placeholder="Ask Mochi about your data, charts, insights..."
-                className="flex-1 px-6 py-4 text-base bg-transparent focus:outline-none placeholder-black/40"
+                className="flex-1 px-6 py-4 text-base bg-transparent focus:outline-none placeholder-black/60 text-black/90"
                 disabled={isTyping}
               />
               <button
