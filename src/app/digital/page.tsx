@@ -57,37 +57,6 @@ export default function DigitalDeepDivePage() {
         <p className="text-sm text-black/70">Campaign setup, targeting, formats, buying types, and placement optimization</p>
       </header>
 
-      {/* Digital Activation Recommendations */}
-      <div className="rounded-xl bg-gradient-to-r from-[#f3f2ef] to-white border border-black/10 p-4">
-        <h3 className="font-medium mb-3">Digital Activation Recommendations</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-          <div>
-            <h4 className="font-medium mb-2">Creative & Format</h4>
-            <ul className="space-y-1 text-black/70">
-              <li>• Video formats show {videoStaticAnalysis.find(v => v.format === "Video")?.roi.toFixed(1) || "higher"} ROI vs static</li>
-              <li>• Optimize for {avgVTR > 0.5 ? "completion rate" : "viewability first"}</li>
-              <li>• Test shorter video formats for mobile placements</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-medium mb-2">Targeting & Buying</h4>
-            <ul className="space-y-1 text-black/70">
-              <li>• Best buying type: <strong>{bestBuyingType?.type || "Programmatic"}</strong> ({bestBuyingType?.roi?.toFixed(2) || "5.8"} ROI)</li>
-              <li>• {targetingAnalysis.find(t => t.targeting === "1st Party")?.roi > targetingAnalysis.find(t => t.targeting === "Standard")?.roi ? "Prioritize" : "Test"} 1st party data segments</li>
-              <li>• Viewability threshold: maintain &gt;{(avgViewability * 100).toFixed(0)}% minimum</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-medium mb-2">Budget Allocation</h4>
-            <ul className="space-y-1 text-black/70">
-              <li>• Funnel optimization: Focus on {funnelAnalysis.reduce((max, f) => f.roi > max.roi ? f : max, funnelAnalysis[0])?.stage || "Awareness"} stage</li>
-              <li>• Cross-platform frequency capping recommended</li>
-              <li>• A/B test creative rotation frequency</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
       {/* Key Digital Insights */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="rounded-xl bg-white border border-black/10 p-4">
@@ -373,6 +342,37 @@ export default function DigitalDeepDivePage() {
         </div>
       </div>
 
+      {/* Digital Activation Recommendations */}
+      <div className="rounded-xl bg-gradient-to-r from-[#f3f2ef] to-white border border-black/10 p-4">
+        <h3 className="font-medium mb-3">Digital Activation Recommendations</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+          <div>
+            <h4 className="font-medium mb-2">Creative & Format</h4>
+            <ul className="space-y-1 text-black/70">
+              <li>• Video formats show {videoStaticAnalysis.find(v => v.format === "Video")?.roi.toFixed(1) || "higher"} ROI vs static</li>
+              <li>• Optimize for {avgVTR > 0.5 ? "completion rate" : "viewability first"}</li>
+              <li>• Test shorter video formats for mobile placements</li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-medium mb-2">Targeting & Buying</h4>
+            <ul className="space-y-1 text-black/70">
+              <li>• Best performing: <strong>{bestBuyingType?.buyingType || "Engagement"}</strong> buying type</li>
+              <li>• {(targetingAnalysis.find(t => t.targeting === "CDP 1P")?.roi || 0) > (targetingAnalysis.find(t => t.targeting === "BAU W25-54")?.roi || 0) ? "1st party" : "BAU"} targeting shows higher efficiency</li>
+              <li>• Balance reach vs precision based on funnel stage</li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-medium mb-2">Platform Strategy</h4>
+            <ul className="space-y-1 text-black/70">
+              <li>• Meta for broad reach and engagement</li>
+              <li>• Google for intent-driven conversions</li>
+              <li>• TikTok for younger audience activation</li>
+              <li>• Amazon for retail media and product discovery</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

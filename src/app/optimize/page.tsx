@@ -184,37 +184,6 @@ export default function OptimizePage() {
         <p className="text-sm text-black/70">Media mix optimization, scenario planning, and efficiency frontier analysis</p>
       </header>
 
-      {/* Strategic Optimization Recommendations */}
-      <div className="rounded-xl bg-gradient-to-r from-[#f3f2ef] to-white border border-black/10 p-4">
-        <h3 className="font-medium mb-3">Strategic Optimization Recommendations</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-          <div>
-            <h4 className="font-medium mb-2">Portfolio Strategy</h4>
-            <ul className="space-y-1 text-black/70">
-              <li>• Best allocation: <strong>{bestScenario?.scenario || "Current + 20%"}</strong> ({bestScenario?.roi?.toFixed(2) || "5.8"} ROI)</li>
-              <li>• Focus on {optimizationGoal === "ROI" ? "efficiency" : "reach"} optimization</li>
-              <li>• {riskTolerance === "Conservative" ? "Gradual" : "Aggressive"} reallocation strategy</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-medium mb-2">Channel Mix</h4>
-            <ul className="space-y-1 text-black/70">
-              <li>• Diversify across {optimizedAllocation.length} high-performing channels</li>
-              <li>• Monitor saturation levels for timing adjustments</li>
-              <li>• Balance reach vs frequency based on objectives</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-medium mb-2">Implementation</h4>
-            <ul className="space-y-1 text-black/70">
-              <li>• Test budget shifts gradually for validation</li>
-              <li>• Monitor competitive activity for opportunities</li>
-              <li>• Regular optimization based on performance data</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
       {/* Optimization Controls */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="rounded-xl bg-white border border-black/10 p-4">
@@ -471,27 +440,27 @@ export default function OptimizePage() {
         <h3 className="font-medium mb-3">Strategic Optimization Recommendations</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
           <div>
-            <h4 className="font-medium mb-2">Portfolio Strategy</h4>
+            <h4 className="font-medium mb-2">Immediate Actions</h4>
             <ul className="space-y-1 text-black/70">
-              <li>• Best allocation: <strong>{bestScenario?.scenario || "Current + 20%"}</strong> ({bestScenario?.roi?.toFixed(2) || "5.8"} ROI)</li>
-              <li>• Focus on {optimizationGoal === "ROI" ? "efficiency" : "reach"} optimization</li>
-              <li>• {riskTolerance === "Conservative" ? "Gradual" : "Aggressive"} reallocation strategy</li>
+              <li>• Increase high-ROI channels by 15-30%</li>
+              <li>• Reduce spend on saturated channels</li>
+              <li>• Reallocate {((potentialUplift / totalNR) * 100).toFixed(1)}% for +${(potentialUplift / 1000).toFixed(0)}K NR</li>
             </ul>
           </div>
           <div>
-            <h4 className="font-medium mb-2">Channel Mix</h4>
+            <h4 className="font-medium mb-2">Optimal Mix Strategy</h4>
             <ul className="space-y-1 text-black/70">
-              <li>• Diversify across {optimizedAllocation.length} high-performing channels</li>
-              <li>• Monitor saturation levels for timing adjustments</li>
-              <li>• Balance reach vs frequency based on objectives</li>
+              <li>• Best scenario: <strong>{bestScenario?.scenario || "Balanced"}</strong></li>
+              <li>• TV/Digital ratio: {bestScenario?.tvShare || 50}%/{bestScenario?.digitalShare || 50}%</li>
+              <li>• Expected ROI: {bestScenario?.totalROI.toFixed(2) || "5.2"}</li>
             </ul>
           </div>
           <div>
-            <h4 className="font-medium mb-2">Implementation</h4>
+            <h4 className="font-medium mb-2">Risk Management</h4>
             <ul className="space-y-1 text-black/70">
-              <li>• Test budget shifts gradually for validation</li>
-              <li>• Monitor competitive activity for opportunities</li>
-              <li>• Regular optimization based on performance data</li>
+              <li>• {riskTolerance} risk profile selected</li>
+              <li>• Diversify across 4-6 primary channels</li>
+              <li>• Monitor saturation curves monthly</li>
             </ul>
           </div>
         </div>

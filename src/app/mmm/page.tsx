@@ -143,31 +143,6 @@ export default function MMMMetaPage() {
         </div>
       </div>
 
-      {/* Strategic Recommendations */}
-      <div className="rounded-xl bg-gradient-to-r from-[#f3f2ef] to-white border border-black/10 p-4">
-        <h3 className="font-medium mb-3">MMM Strategic Recommendations</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-          <div>
-            <h4 className="font-medium mb-2">Immediate Actions</h4>
-            <ul className="space-y-1 text-black/70">
-              <li>• Rebalance spend toward long-term building channels (TV, BVOD)</li>
-              <li>• Optimize high-saturation channels by reducing spend or improving creative</li>
-              <li>• Increase investment in under-saturated, high-efficiency channels</li>
-              <li>• Test attribution model impact on budget allocation decisions</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-medium mb-2">Strategic Initiatives</h4>
-            <ul className="space-y-1 text-black/70">
-              <li>• Develop integrated campaigns leveraging both short and long-term channels</li>
-              <li>• Establish media contribution benchmarks for quarterly reviews</li>
-              <li>• Implement dynamic budget allocation based on saturation curves</li>
-              <li>• Create channel-specific KPIs aligned with contribution patterns</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
       {/* Media Contribution Decomposition */}
       <div className="rounded-xl bg-white border border-black/10 p-4">
         <h3 className="font-medium mb-4">Media Contribution Decomposition</h3>
@@ -532,6 +507,30 @@ export default function MMMMetaPage() {
         </div>
       </div>
 
+      {/* Strategic Recommendations */}
+      <div className="rounded-xl bg-gradient-to-r from-[#f3f2ef] to-white border border-black/10 p-4">
+        <h3 className="font-medium mb-3">MMM Strategic Recommendations</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+          <div>
+            <h4 className="font-medium mb-2">Immediate Actions</h4>
+            <ul className="space-y-1 text-black/70">
+              <li>• Rebalance spend toward long-term building channels (TV, BVOD)</li>
+              <li>• Optimize high-saturation channels by reducing spend or improving creative</li>
+              <li>• Increase investment in under-saturated, high-efficiency channels</li>
+              <li>• Test attribution model impact on budget allocation decisions</li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-medium mb-2">Strategic Initiatives</h4>
+            <ul className="space-y-1 text-black/70">
+              <li>• Develop integrated campaigns leveraging both short and long-term channels</li>
+              <li>• Establish media contribution benchmarks for quarterly reviews</li>
+              <li>• Implement dynamic budget allocation based on saturation curves</li>
+              <li>• Create channel-specific KPIs aligned with contribution patterns</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

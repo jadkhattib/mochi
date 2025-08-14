@@ -45,29 +45,6 @@ export default function TVCTVPage() {
         <p className="text-sm text-black/70">Linear TV vs CTV performance, Prime Time optimization, BVOD/SVOD/AVOD analysis</p>
       </header>
 
-      {/* Recommendations */}
-      <div className="rounded-xl bg-gradient-to-r from-[#f3f2ef] to-white border border-black/10 p-4">
-        <h3 className="font-medium mb-3">TV & CTV Activation Recommendations</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-          <div>
-            <h4 className="font-medium mb-2">Prime Time Strategy</h4>
-            <ul className="space-y-1 text-black/70">
-              <li>• Current prime ratio: <strong>{(prime.prime / Math.max(1, prime.prime + prime.offPrime) * 100).toFixed(0)}%</strong></li>
-              <li>• Consider {prime.prime > prime.offPrime ? "reducing" : "increasing"} prime allocation based on ROI</li>
-              <li>• Test daypart rotation for frequency management</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-medium mb-2">Platform Mix Optimization</h4>
-            <ul className="space-y-1 text-black/70">
-              <li>• Best performing platform: <strong>{platformBreakdown.length > 0 ? platformBreakdown.reduce((max, p) => p.roi > max.roi ? p : max, platformBreakdown[0]).platform : "N/A"}</strong></li>
-              <li>• Consider CTV for precise targeting with frequency caps</li>
-              <li>• Linear TV for mass reach during peak moments</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
       {/* Key Insights */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="rounded-xl bg-white border border-black/10 p-4">
@@ -193,11 +170,43 @@ export default function TVCTVPage() {
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
         <div className="rounded-xl bg-white border border-black/10 p-4">
           <h3 className="font-medium mb-4">BVOD/SVOD/AVOD Performance</h3>
-          <ResponsiveContainer width="100%" height={300}>
+          <div className="mb-4 grid grid-cols-1 md:grid-cols-4 gap-3">
+            {platformBreakdown.map((platform, idx) => (
+              <div key={idx} className="p-3 bg-gray-50 rounded-lg">
+                <div className="flex items-center gap-2 mb-2">
+                  <div 
+                    className="w-3 h-3 rounded-full" 
+                    style={{ backgroundColor: colors[idx % colors.length] }}
+                  ></div>
+                  <span className="font-medium text-sm">{platform.platform}</span>
+                </div>
+                <div className="space-y-1 text-xs">
+                  <div className="flex justify-between">
+                    <span className="text-black/60">ROI:</span>
+                    <span className="font-medium">{platform.roi.toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-black/60">Spend:</span>
+                    <span className="font-medium">${(platform.spend / 1000).toFixed(0)}K</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-black/60">VTR:</span>
+                    <span className="font-medium">{platform.vtr ? `${platform.vtr.toFixed(1)}%` : 'N/A'}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-black/60">Viewability:</span>
+                    <span className="font-medium">{platform.viewability ? `${platform.viewability.toFixed(1)}%` : 'N/A'}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          <ResponsiveContainer width="100%" height={200}>
             <BarChart data={platformBreakdown} layout="horizontal">
               <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-              <XAxis type="number" tick={{ fontSize: 12 }} />
-              <YAxis dataKey="platform" type="category" tick={{ fontSize: 12 }} width={80} />
+              <XAxis type="number" tick={{ fontSize: 12 }} tickFormatter={(value) => value.toFixed(1)} />
+              <YAxis dataKey="platform" type="category" tick={{ fontSize: 12 }} width={60} />
               <Tooltip 
                 contentStyle={{ 
                   backgroundColor: 'white', 
@@ -207,16 +216,25 @@ export default function TVCTVPage() {
                 }}
                 formatter={(value, name) => [
                   typeof value === 'number' ? value.toFixed(2) : value, 
-                  name === 'roi' ? 'ROI' : name === 'vtr' ? 'VTR %' : name === 'viewability' ? 'Viewability %' : name
+                  'ROI'
                 ]}
               />
-              <Bar dataKey="roi" name="ROI">
+              <Bar dataKey="roi" name="ROI" radius={[0, 4, 4, 0]}>
                 {platformBreakdown.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
                 ))}
               </Bar>
             </BarChart>
           </ResponsiveContainer>
+          
+          <div className="mt-3 p-3 bg-blue-50 rounded-lg">
+            <h4 className="text-xs font-medium text-blue-800 mb-1">Platform Insights</h4>
+            <div className="text-xs text-blue-600 space-y-1">
+              <div>• <strong>Best ROI:</strong> {platformBreakdown.reduce((max, p) => p.roi > max.roi ? p : max, platformBreakdown[0])?.platform || 'N/A'} at {Math.max(...platformBreakdown.map(p => p.roi)).toFixed(2)} ROI</div>
+              <div>• <strong>Highest VTR:</strong> {platformBreakdown.reduce((max, p) => (p.vtr || 0) > (max.vtr || 0) ? p : max, platformBreakdown[0])?.platform || 'N/A'} at {Math.max(...platformBreakdown.map(p => p.vtr || 0)).toFixed(1)}%</div>
+              <div>• <strong>Best Viewability:</strong> {platformBreakdown.reduce((max, p) => (p.viewability || 0) > (max.viewability || 0) ? p : max, platformBreakdown[0])?.platform || 'N/A'} at {Math.max(...platformBreakdown.map(p => p.viewability || 0)).toFixed(1)}%</div>
+            </div>
+          </div>
         </div>
 
         <div className="rounded-xl bg-white border border-black/10 p-4">
@@ -288,6 +306,28 @@ export default function TVCTVPage() {
         </p>
       </div>
 
+      {/* Recommendations */}
+      <div className="rounded-xl bg-gradient-to-r from-[#f3f2ef] to-white border border-black/10 p-4">
+        <h3 className="font-medium mb-3">TV & CTV Activation Recommendations</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+          <div>
+            <h4 className="font-medium mb-2">Prime Time Strategy</h4>
+            <ul className="space-y-1 text-black/70">
+              <li>• Current prime ratio: <strong>{(prime.prime / Math.max(1, prime.prime + prime.offPrime) * 100).toFixed(0)}%</strong></li>
+              <li>• Consider {prime.prime > prime.offPrime ? "reducing" : "increasing"} prime allocation based on ROI</li>
+              <li>• Test daypart rotation for frequency management</li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-medium mb-2">Platform Mix Optimization</h4>
+            <ul className="space-y-1 text-black/70">
+              <li>• Best performing platform: <strong>{platformBreakdown.length > 0 ? platformBreakdown.reduce((max, p) => p.roi > max.roi ? p : max, platformBreakdown[0]).platform : "N/A"}</strong></li>
+              <li>• Consider CTV for precise targeting with frequency caps</li>
+              <li>• Linear TV for mass reach during peak moments</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

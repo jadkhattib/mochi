@@ -58,43 +58,12 @@ export default function PublishersPage() {
         <p className="text-sm text-black/70">Cross-country learnings, winning tactics, and performance benchmarks by key publisher</p>
       </header>
 
-      {/* Strategic Publisher Recommendations */}
-      <div className="rounded-xl bg-gradient-to-r from-[#f3f2ef] to-white border border-black/10 p-4">
-        <h3 className="font-medium mb-3">Strategic Publisher Recommendations</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-          <div>
-            <h4 className="font-medium mb-2">Performance Leaders</h4>
-            <ul className="space-y-1 text-black/70">
-              <li>• Top ROI: <strong>{topPublisher?.publisher || "Meta"}</strong> ({topPublisher?.avgROI?.toFixed(2) || "5.2"} ROI)</li>
-              <li>• Scale efficiently with {topPublisher?.publisher || "leading performers"} for core volume</li>
-              <li>• Fastest growing: <strong>{fastestGrowing?.publisher || "TikTok"}</strong> (+{fastestGrowing?.growth?.toFixed(0) || "28"}% growth)</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-medium mb-2">Portfolio Strategy</h4>
-            <ul className="space-y-1 text-black/70">
-              <li>• Diversify across {publisherROIScale.length} publishers to reduce risk</li>
-              <li>• Focus 60% budget on top 3 performers for stability</li>
-              <li>• Test emerging platforms with 10-15% budget allocation</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-medium mb-2">Cross-Country Insights</h4>
-            <ul className="space-y-1 text-black/70">
-              <li>• Leverage winning tactics across similar markets</li>
-              <li>• Adapt creative formats to local publisher preferences</li>
-              <li>• Monitor competitive shifts for reallocation opportunities</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
       {/* Key Publisher Insights */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="rounded-xl bg-white border border-black/10 p-4">
           <h3 className="font-medium text-sm mb-2">Top Publisher</h3>
           <p className="text-2xl font-bold text-[#2d2d2d]">{topPublisher?.publisher || "N/A"}</p>
-          <p className="text-xs text-black/60 mt-1">ROI: {topPublisher?.avgROI?.toFixed(2) || "0.00"}</p>
+          <p className="text-xs text-black/60 mt-1">ROI: {topPublisher?.avgROI.toFixed(2) || "0.00"}</p>
         </div>
         <div className="rounded-xl bg-white border border-black/10 p-4">
           <h3 className="font-medium text-sm mb-2">Fastest Growing</h3>
@@ -432,25 +401,26 @@ export default function PublishersPage() {
           <div>
             <h4 className="font-medium mb-2">Performance Leaders</h4>
             <ul className="space-y-1 text-black/70">
-              <li>• Top ROI: <strong>{topPublisher?.publisher || "Meta"}</strong> ({topPublisher?.avgROI?.toFixed(2) || "5.2"} ROI)</li>
-              <li>• Scale efficiently with {topPublisher?.publisher || "leading performers"} for core volume</li>
-              <li>• Fastest growing: <strong>{fastestGrowing?.publisher || "TikTok"}</strong> (+{fastestGrowing?.growth?.toFixed(0) || "28"}% growth)</li>
+              <li>• Top ROI: <strong>{topPublisher?.publisher || "Meta"}</strong> ({topPublisher?.avgROI.toFixed(2) || "5.2"} ROI)</li>
+              <li>• Scale leader: Highest reach with efficient CPMs</li>
+              <li>• Focus on winning formats and targeting tactics</li>
             </ul>
           </div>
           <div>
-            <h4 className="font-medium mb-2">Portfolio Strategy</h4>
+            <h4 className="font-medium mb-2">Growth Opportunities</h4>
             <ul className="space-y-1 text-black/70">
-              <li>• Diversify across {publisherROIScale.length} publishers to reduce risk</li>
-              <li>• Focus 60% budget on top 3 performers for stability</li>
-              <li>• Test emerging platforms with 10-15% budget allocation</li>
+              <li>• Fastest growing: <strong>{fastestGrowing?.publisher || "TikTok"}</strong> (+{fastestGrowing?.growth.toFixed(1) || "12.5"}%)</li>
+              <li>• Emerging platforms showing strong momentum</li>
+              <li>• Test budget reallocation to growth channels</li>
             </ul>
           </div>
           <div>
-            <h4 className="font-medium mb-2">Cross-Country Insights</h4>
+            <h4 className="font-medium mb-2">Platform Strategy</h4>
             <ul className="space-y-1 text-black/70">
-              <li>• Leverage winning tactics across similar markets</li>
-              <li>• Adapt creative formats to local publisher preferences</li>
-              <li>• Monitor competitive shifts for reallocation opportunities</li>
+              <li>• Meta: Video + broad targeting for engagement</li>
+              <li>• Google: Search intent + responsive ads</li>
+              <li>• TikTok: Short video + younger audiences</li>
+              <li>• Amazon: Product focus + purchase intent</li>
             </ul>
           </div>
         </div>

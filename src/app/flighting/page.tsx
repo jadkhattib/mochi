@@ -68,37 +68,6 @@ export default function FlightingPage() {
         <p className="text-sm text-black/70">Optimal flighting patterns for ROI and sales optimization with budget scenario modeling</p>
       </header>
 
-      {/* Strategic Flighting Recommendations */}
-      <div className="rounded-xl bg-gradient-to-r from-[#f3f2ef] to-white border border-black/10 p-4">
-        <h3 className="font-medium mb-3">Strategic Flighting Recommendations</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-          <div>
-            <h4 className="font-medium mb-2">Optimal Patterns</h4>
-            <ul className="space-y-1 text-black/70">
-              <li>• Best pattern: <strong>{flightScenarioROI.reduce((max, f) => f.roi > max.roi ? f : max, flightScenarioROI[0])?.scenario || "Pulsing"}</strong></li>
-              <li>• Current saturation: {saturationData.length > 10 ? `${saturationData[10]?.saturation?.toFixed(1)}%` : "N/A"}</li>
-              <li>• Optimize spend timing for maximum efficiency</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-medium mb-2">Budget Optimization</h4>
-            <ul className="space-y-1 text-black/70">
-              <li>• Focus on {budgetScenarios.reduce((max, b) => b.roi > max.roi ? b : max, budgetScenarios[0])?.scenario || "high impact"} periods</li>
-              <li>• Balance reach vs frequency based on objectives</li>
-              <li>• Monitor competitive activity for timing adjustments</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-medium mb-2">Timing Strategy</h4>
-            <ul className="space-y-1 text-black/70">
-              <li>• Coordinate flights across channels for synergy</li>
-              <li>• Leverage seasonal peaks for maximum impact</li>
-              <li>• Test different flight durations for optimal ROI</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
       {/* Flighting Controls */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="rounded-xl bg-white border border-black/10 p-4">
@@ -272,27 +241,27 @@ export default function FlightingPage() {
         <h3 className="font-medium mb-3">Strategic Flighting Recommendations</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
           <div>
-            <h4 className="font-medium mb-2">Optimal Patterns</h4>
+            <h4 className="font-medium mb-2">High-Performance Patterns</h4>
             <ul className="space-y-1 text-black/70">
-              <li>• Best pattern: <strong>{flightScenarioROI.reduce((max, f) => f.roi > max.roi ? f : max, flightScenarioROI[0])?.scenario || "Pulsing"}</strong></li>
-              <li>• Current saturation: {saturationData.length > 10 ? `${saturationData[10]?.saturation?.toFixed(1)}%` : "N/A"}</li>
-              <li>• Optimize spend timing for maximum efficiency</li>
+              <li>• Best ROI: <strong>{bestScenario?.scenario || "1 Week On/Off"}</strong> ({bestScenario?.roi.toFixed(2) || "6.2"} ROI)</li>
+              <li>• Most efficient: Alternating patterns reduce saturation</li>
+              <li>• Concentrated spend increases impact per dollar</li>
             </ul>
           </div>
           <div>
             <h4 className="font-medium mb-2">Budget Optimization</h4>
             <ul className="space-y-1 text-black/70">
-              <li>• Focus on {budgetScenarios.reduce((max, b) => b.roi > max.roi ? b : max, budgetScenarios[0])?.scenario || "high impact"} periods</li>
-              <li>• Balance reach vs frequency based on objectives</li>
-              <li>• Monitor competitive activity for timing adjustments</li>
+              <li>• Optimal budget: <strong>{bestBudgetScenario?.budgetLevel || "Current"}</strong></li>
+              <li>• Saturation point: {(optimalSpendLevel / 1000).toFixed(1)}K spend level</li>
+              <li>• Focus on {optimizationGoal === "ROI" ? "efficiency" : "volume"} optimization</li>
             </ul>
           </div>
           <div>
             <h4 className="font-medium mb-2">Timing Strategy</h4>
             <ul className="space-y-1 text-black/70">
-              <li>• Coordinate flights across channels for synergy</li>
-              <li>• Leverage seasonal peaks for maximum impact</li>
-              <li>• Test different flight durations for optimal ROI</li>
+              <li>• Q1 launch: Front-loaded burst for maximum impact</li>
+              <li>• Seasonal: Build anticipation with pre-season bursts</li>
+              <li>• Competitive gaps: Exploit quiet periods efficiently</li>
             </ul>
           </div>
         </div>
