@@ -163,8 +163,8 @@ export default function ChatBubble({ getContext }: ChatBubbleProps) {
                     <div className={clsx(
                       "max-w-[85%] rounded-xl px-4 py-3 text-base leading-relaxed",
                       m.role === "user" 
-                        ? "bg-black/40 text-white/95 rounded-br-md" 
-                        : "bg-white/25 text-black/95 rounded-bl-md"
+                        ? "bg-black/70 text-white/95 rounded-br-md" 
+                        : "bg-white/45 text-black/95 rounded-bl-md"
                     )}>
                       {m.role === "user" ? (
                         <div>{m.content}</div>
